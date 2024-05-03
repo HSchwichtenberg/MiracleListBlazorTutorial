@@ -1,20 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
-    <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
-  </PropertyGroup>
+ <PropertyGroup>
+  <TargetFramework>net8.0</TargetFramework>
+  <ImplicitUsings>enable</ImplicitUsings>
+  <Nullable>enable</Nullable>
+  <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+  <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
+ </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="ITVisions.Blazor" Version="8.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.4" />
-  </ItemGroup>
+ <!--NuGet-Pakete-->
+ <ItemGroup>
+  <PackageReference Include="ITVisions.Blazor" Version="8.3.0" />
+  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.4" />
+ </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\MiracleListAPI_Proxy\MiracleListAPI_Proxy.csproj" />
-  </ItemGroup>
+ <!--Projektreferenzen-->
+ <ItemGroup>
+  <ProjectReference Include="..\..\MiracleListAPI_Proxy\MiracleListAPI_Proxy.csproj" />
+ </ItemGroup>
 
 </Project>
