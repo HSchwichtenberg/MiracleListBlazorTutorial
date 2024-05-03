@@ -21,4 +21,4 @@ Die Aufgabenstellungen erhalten Sie als PDF-Datei von dem Workshopleiter.
 - [Fertige Lösung "MiracleList" mit Blazor WebAssembly](http://miraclelist-bw.azurewebsites.net/) in der Aure-Cloud
 - [Fertige Lösung "MiracleList" mit Blazor Server](http://miraclelist-bs.azurewebsites.net/) in der Aure-Cloud
 - [Fertige Lösung "MiracleList" mit Blazor United](http://miraclelist-bu.azurewebsites.net/) in der Aure-Cloud
-- [Cloudbasiertes MiracleList-Backend](http://miraclelistbackend.azurewebsites.net/clientid) basiert auf ASP.NET Core  --> [Quellcode auf GitHub](https://github.com/HSchwichtenberg/MiracleListBackend)
+- [Cloudbasiertes MiracleList-Backend](http://miraclelistbackend.azurewebsites.net/clientid) basiert auf ASP.NET Core  --> [Quellcode auf GitHub](https://github.com/HSchwichtenberg/MiracleListNET)

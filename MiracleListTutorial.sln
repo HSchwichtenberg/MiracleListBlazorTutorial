@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiracleListAPI_Proxy", "Mir
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{322B95D3-339F-42C6-B76C-562F5F4CFAF9}"
 	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		.git\config = .git\config
 		Directory.Build.props = Directory.Build.props
 		nuget.config = nuget.config
 		readme.md = readme.md
