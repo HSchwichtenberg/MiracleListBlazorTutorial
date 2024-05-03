@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiracleList", "MiracleList\MiracleList\MiracleList.csproj", "{85CA1879-FEEC-49D3-9341-78D76CC16682}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiracleList.Client", "MiracleList\MiracleList.Client\MiracleList.Client.csproj", "{3D6D272D-AB6B-417E-808C-31E05B40A27D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BO", "BO\BO.csproj", "{558F6C27-DA8C-4D04-A9EC-8A561F2BF675}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiracleListAPI_Proxy", "MiracleListAPI_Proxy\MiracleListAPI_Proxy.csproj", "{376AB06C-76D7-4D0D-8E41-CD0BB3F998DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{322B95D3-339F-42C6-B76C-562F5F4CFAF9}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		nuget.config = nuget.config
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectPackages", "ProjectPackages", "{F61C7777-49BD-4E94-BE82-F46119A6E3E2}"
+	ProjectSection(SolutionItems) = preProject
+		ProjectPackages\ITV.AppUtil.NETStandard.9.18.1.nupkg = ProjectPackages\ITV.AppUtil.NETStandard.9.18.1.nupkg
+		ProjectPackages\ITV.EFCoreUtil.8.0.0.nupkg = ProjectPackages\ITV.EFCoreUtil.8.0.0.nupkg
+		ProjectPackages\ITVisions.Blazor.8.3.0.nupkg = ProjectPackages\ITVisions.Blazor.8.3.0.nupkg
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{85CA1879-FEEC-49D3-9341-78D76CC16682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85CA1879-FEEC-49D3-9341-78D76CC16682}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85CA1879-FEEC-49D3-9341-78D76CC16682}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85CA1879-FEEC-49D3-9341-78D76CC16682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D6D272D-AB6B-417E-808C-31E05B40A27D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D6D272D-AB6B-417E-808C-31E05B40A27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D6D272D-AB6B-417E-808C-31E05B40A27D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D6D272D-AB6B-417E-808C-31E05B40A27D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{558F6C27-DA8C-4D04-A9EC-8A561F2BF675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{558F6C27-DA8C-4D04-A9EC-8A561F2BF675}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{558F6C27-DA8C-4D04-A9EC-8A561F2BF675}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{558F6C27-DA8C-4D04-A9EC-8A561F2BF675}.Release|Any CPU.Build.0 = Release|Any CPU
+		{376AB06C-76D7-4D0D-8E41-CD0BB3F998DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{376AB06C-76D7-4D0D-8E41-CD0BB3F998DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{376AB06C-76D7-4D0D-8E41-CD0BB3F998DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{376AB06C-76D7-4D0D-8E41-CD0BB3F998DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B61E280A-2940-46E5-8E19-F2413E435964}
+	EndGlobalSection
+EndGlobal

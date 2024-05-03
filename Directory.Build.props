@@ -1,0 +1,24 @@
+<Project>
+
+ <!--Verwendete .NET-Version-->
+ <PropertyGroup>
+  <TargetFramework>net8.0</TargetFramework>
+  <!--<TargetFrameworks>net8.0;net9.0</TargetFrameworks>-->
+ </PropertyGroup>
+
+ <!--App-Version-->
+ <PropertyGroup>
+  <Version>0.0.0</Version>
+ </PropertyGroup>
+
+ <!--App-Infos-->
+ <PropertyGroup>
+  <Authors>Dr. Holger Schwichtenberg (www.IT-Visions.de)</Authors>
+  <Company>www.IT-Visions.de</Company>
+  <Product>MiracleList</Product>
+  <Copyright>(C) Dr. Holger Schwichtenberg (www.IT-Visions.de)</Copyright>
+  <PackageProjectUrl>https://github.com/HSchwichtenberg/MiracleListBlazorTutorial/</PackageProjectUrl>
+  <PackageReleaseNotes>Ausgangszustand für Blazor-Tutorial</PackageReleaseNotes>
+ </PropertyGroup>
+ 
+</Project>
