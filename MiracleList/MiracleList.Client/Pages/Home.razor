@@ -1,8 +1,66 @@
 ﻿@page "/"
 
-<PageTitle>MiracleList @System.Reflection.Assembly.GetEntryAssembly().GetName().Version</PageTitle>
+<PageTitle>MiracleList @System.Reflection.Assembly.GetEntryAssembly()!.GetName().Version</PageTitle>
 
 <h3>Herzlich Willkommen zum Blazor-Tutorial!</h3>
 Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints") zur fertigen Anwendung bringen sollen.
 
-<About></About>
+
+<hr />
+
+@* Spalte 1: Kategorien *@
+<div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2">
+
+ <ol class="list-group scroll">
+  @foreach (var c in this.CategorySet)
+  {
+   <li class="list-group-item"
+       style="background-color:@GetCategoryColor(c)"
+       @onclick="()=>ShowTaskSet(c)">@c.Name</li>
+  }
+ </ol>
+
+</div>
+
+@* Spalte 2: Aufgaben *@
+<div class="MLPanel col-xs-8 col-sm-8 col-md-9 col-lg-10">
+
+ <ol class="list-group scroll">
+  @foreach (var t in this.TaskSet)
+  {
+
+
+@*    <li class="list-group-item"
+       style="background-color:@(this.Task != null && t.TaskID == Task.TaskID ? "#E0EEFA": null)"
+       @onclick="()=>ShowTaskDetails(t)"> *@
+
+   <li class="list-group-item @(this.Task != null && t.TaskID == Task.TaskID ? "MLactive": null)"
+       @onclick="()=>ShowTaskDetails(t)">
+
+
+    <span style="float:left">
+     <input type="checkbox" class="MLcheckbox" checked="@t.Done"  />
+    </span>
+    <b>@t.Title</b>
+    <br />
+    @if (t.Due.HasValue)
+    {
+     if (t.Due.Value > DateTime.Now)
+     {
+      <div>
+       due at @t.Due.Value.ToShortDateString()
+      </div>
+     }
+     else
+     {
+      <div style="color:red">
+       due since @t.Due.Value.ToShortDateString()
+      </div>
+     }
+    }
+
+   </li>
+  }
+ </ol>
+
+</div>

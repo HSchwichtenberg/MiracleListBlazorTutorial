@@ -1,8 +1,10 @@
 ﻿@page "/about"
+@page "/ueber"
 
 @inject MiracleListAPI.MiracleListProxy proxy
+@inject NavigationManager nav
 
-<h3>Über diese App</h3>
+<h3>Über diese Anwendung</h3>
 Autor: Dr. Holger Schwichtenberg, <a href="http://www.IT-Visions.de/">www.IT-Visions.de</a>
 <br />
 Blazor WebAssembly: @Version
@@ -31,10 +33,17 @@ Blazor WebAssembly: @Version</div>
  protected override async Task OnInitializedAsync()
  {
   Version = " " + System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
-  
+
   // WebAPI aufrufen
   var serverData = await proxy.AboutAsync();
   ServerAppVersion = serverData[6];
   ServerFramework = serverData[8];
+
+  Util.Log(Version);
+ }
+
+ protected override void OnAfterRender(bool firstRender)
+ {
+  Util.Log(nav?.GetType()?.FullName);
  }
 }

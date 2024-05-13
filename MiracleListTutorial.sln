@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiracleList", "MiracleList\MiracleList\MiracleList.csproj", "{85CA1879-FEEC-49D3-9341-78D76CC16682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiracleList", "MiracleList\MiracleList\MiracleList.csproj", "{85CA1879-FEEC-49D3-9341-78D76CC16682}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiracleList.Client", "MiracleList\MiracleList.Client\MiracleList.Client.csproj", "{3D6D272D-AB6B-417E-808C-31E05B40A27D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiracleList.Client", "MiracleList\MiracleList.Client\MiracleList.Client.csproj", "{3D6D272D-AB6B-417E-808C-31E05B40A27D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BO", "BO\BO.csproj", "{558F6C27-DA8C-4D04-A9EC-8A561F2BF675}"
 EndProject
