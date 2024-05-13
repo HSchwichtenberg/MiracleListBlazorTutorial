@@ -4,42 +4,50 @@
 
 <h3>Herzlich Willkommen zum Blazor-Tutorial!</h3>
 Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints") zur fertigen Anwendung bringen sollen.
-
-
 <hr />
 
 @* Spalte 1: Kategorien *@
-<div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2">
+<div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2 @(this.Task!=null ? "hidden-sm hidden-xs": ""  )">
+ <input name="newCategoryName" type="text" class="form-control" @bind="newCategoryName" @onkeyup="(e) => NewCategory_Keyup(e)" placeholder="new Category..." />
 
  <ol class="list-group scroll">
   @foreach (var c in this.CategorySet)
   {
    <li class="list-group-item"
        style="background-color:@GetCategoryColor(c)"
-       @onclick="()=>ShowTaskSet(c)">@c.Name</li>
+       @onclick="()=>ShowTaskSet(c)">
+    <span id="Remove" style="float:right;" class="glyphicon glyphicon-remove-circle"
+          @onclick="() => RemoveCategory(c)"></span>      
+       @c.Name</li>
   }
  </ol>
 
 </div>
 
 @* Spalte 2: Aufgaben *@
-<div class="MLPanel col-xs-8 col-sm-8 col-md-9 col-lg-10">
+<div class="MLPanel @(this.Task==null ? "col-xs-8 col-sm-8 col-md-9 col-lg-10": "hidden-xs col-sm-6 col-md-5 col-lg-6"  )">
+ <input name="newTaskTitle" type="text" class="form-control" disabled="@(this.Category == null)" @bind="newTaskTitle" @onkeyup="(e) => NewTask_Keyup(e)" placeholder="new Task..." />
 
  <ol class="list-group scroll">
+
   @foreach (var t in this.TaskSet)
   {
 
-
-@*    <li class="list-group-item"
-       style="background-color:@(this.Task != null && t.TaskID == Task.TaskID ? "#E0EEFA": null)"
-       @onclick="()=>ShowTaskDetails(t)"> *@
+   @*    <li class="list-group-item"
+  style="background-color:@(this.Task != null && t.TaskID == Task.TaskID ? "#E0EEFA": null)"
+  @onclick="()=>ShowTaskDetails(t)"> *@
 
    <li class="list-group-item @(this.Task != null && t.TaskID == Task.TaskID ? "MLactive": null)"
        @onclick="()=>ShowTaskDetails(t)">
 
+    <span id="Remove" style="float:right;" class="glyphicon glyphicon-remove-circle"
+          @onclick="() => RemoveTask(t)"></span>
 
     <span style="float:left">
-     <input type="checkbox" class="MLcheckbox" checked="@t.Done"  />
+     <input type="checkbox" class="MLcheckbox" @bind="t.Done" @onclick:stopPropagation="true" @bind:after='async ()=> {
+await proxy.ChangeTaskDoneAsync(t.TaskID, t.Done, am.Token); Util.Log("Done Changed: " + t.Done); }'
+ sto
+ />
     </span>
     <b>@t.Title</b>
     <br />
@@ -58,9 +66,14 @@ Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints")
       </div>
      }
     }
-
    </li>
   }
  </ol>
-
 </div>
+ @* Spalte 3: Task Edit *@
+ <div class="MLPanel col-xs-12 col-sm-6 col-md-4 col-lg-4">
+
+ <TaskEdit Task="Task" TaskHasChanged="TaskHasChanged"></TaskEdit>
+
+  </div>
+
