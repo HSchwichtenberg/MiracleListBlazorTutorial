@@ -17,8 +17,9 @@ Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints")
        style="background-color:@GetCategoryColor(c)"
        @onclick="()=>ShowTaskSet(c)">
     <span id="Remove" style="float:right;" class="glyphicon glyphicon-remove-circle"
-          @onclick="() => RemoveCategory(c)"></span>      
-       @c.Name</li>
+          @onclick="() => RemoveCategory(c)"></span>
+    @c.Name
+   </li>
   }
  </ol>
 
@@ -46,8 +47,7 @@ Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints")
     <span style="float:left">
      <input type="checkbox" class="MLcheckbox" @bind="t.Done" @onclick:stopPropagation="true" @bind:after='async ()=> {
 await proxy.ChangeTaskDoneAsync(t.TaskID, t.Done, am.Token); Util.Log("Done Changed: " + t.Done); }'
- sto
- />
+            sto />
     </span>
     <b>@t.Title</b>
     <br />
@@ -70,10 +70,9 @@ await proxy.ChangeTaskDoneAsync(t.TaskID, t.Done, am.Token); Util.Log("Done Chan
   }
  </ol>
 </div>
- @* Spalte 3: Task Edit *@
- <div class="MLPanel col-xs-12 col-sm-6 col-md-4 col-lg-4">
+@* Spalte 3: Task Edit *@
+<div class="MLPanel col-xs-12 col-sm-6 col-md-4 col-lg-4">
 
  <TaskEdit Task="Task" TaskHasChanged="TaskHasChanged"></TaskEdit>
 
-  </div>
-
+</div>
