@@ -1,5 +1,6 @@
 ﻿@page "/"
 @* @inject AuthenticationManager am *@
+@inject PersistentComponentState ApplicationState
 
 <PageTitle>MiracleList @System.Reflection.Assembly.GetEntryAssembly().GetName().Version</PageTitle>
 
@@ -10,37 +11,49 @@ Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints")
 @* <About /> *@
 
 <div class="row">
- <div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2">
+ @* Spalte 1 *@
+ <div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2 @(this.task!=null ? "hidden-sm hidden-xs": ""  )">
 
   <input type="text" class="form-control" placeholder="new category name" @bind="this.newCategoryName" @onkeyup="(e)=>NewCategory_KeyUp(e)" />
 
   <ol class="list-group scroll">
    @foreach (BO.Category cat in this.categorySet)
    {
-    <li class="list-group-item" @onclick="()=>ShowTaskSet(cat)" style="background-color: @(cat.CategoryID == category?.CategoryID ? "lightblue" : "white")">
+    <li class="list-group-item" @onclick="async ()=> await ShowTaskSet(cat)" style="background-color: @(cat.CategoryID == category?.CategoryID ? "lightblue" : "white")">
      @cat.Name
     </li>
    }
   </ol>
  </div>
+ @* Spalte 2 *@
+ <div class="MLPanel @(this.task==null ? "col-xs-8 col-sm-8 col-md-9 col-lg-10 ": "hidden-xs col-sm-6 col-md-5 col-lg-6"  )">
 
- <div class="MLPanel col-xs-8 col-sm-8 col-md-9 col-lg-10">
-
-  <input type="text" class="form-control" placeholder="new category name" @bind="this.newTaskTitle" @onkeyup="(e)=>NewTask_KeyUp(e)" />
+  <input type="text" class="form-control" placeholder="new task name" @bind="this.newTaskTitle" @onkeyup="(e)=>NewTask_KeyUp(e)" />
 
   <ol class="list-group scroll">
    @foreach (var t in this.taskSet)
    {
     <li @key="@t.TaskID" class="list-group-item" @onclick="()=>ShowTaskDetails(t)" style="background-color: @(t.TaskID == task?.TaskID ? "lightblue" : "white")">
 
-     <input type="checkbox" name="@("done" + t.TaskID)" id="@("done" + t.TaskID)" checked="@t.Done" class="MLcheckbox" />
+     <input type="checkbox" name="@("done" + t.TaskID)" id="@("done" + t.TaskID)" @bind="@t.Done" class="MLcheckbox" @bind:after="()=>ChangeTaskAsync(t)" @onclick:stopPropagation="true" />
 
      @t.Title @t.Created
     </li>
    }
   </ol>
  </div>
+
+ @* Spalte 3 (optional) *@
+ @if (task != null)
+ {
+  <div class="MLPanel col-xs-12 col-sm-6 col-md-4 col-lg-4">
+   <TaskEdit Task="@task" TaskHasChanged="TaskHasChanged" />
+  </div>
+ }
+
 </div>
+
+
 <hr />
 
  Diese Seite rendert mit Blazor @this.RendererInfo.Name (Interaktiv = @this.RendererInfo.IsInteractive)
