@@ -14,5 +14,8 @@ public class SharedDI
 
   // Hilfsfunktionen
   services.AddBlazorUtil();
+
+  // eigene Dienste, die wir implementieren
+  services.AddScoped<MiracleList.AuthenticationManager>();
  }
 }

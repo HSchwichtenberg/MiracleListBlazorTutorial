@@ -32,7 +32,7 @@ Blazor @this.RendererInfo.Name @Version</div>
   Version = " " + System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
   
   // WebAPI aufrufen
-  var serverData = await proxy.AboutAsync();
+  List<string> serverData = await proxy.AboutAsync();
   ServerAppVersion = serverData[6];
   ServerFramework = serverData[8];
  }

@@ -1,8 +1,46 @@
 ﻿@page "/"
+@* @inject AuthenticationManager am *@
 
 <PageTitle>MiracleList @System.Reflection.Assembly.GetEntryAssembly().GetName().Version</PageTitle>
 
-<h3>Herzlich Willkommen zum Blazor-Tutorial!</h3>
+<h3>Herzlich Willkommen zum Blazor-Tutorial!!!</h3>
 Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints") zur fertigen Anwendung bringen sollen.
 
-<About></About>
+<hr style="border-color:red" />
+@* <About /> *@
+
+<div class="row">
+ <div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2">
+
+  <input type="text" class="form-control" placeholder="new category name" @bind="this.newCategoryName" @onkeyup="(e)=>NewCategory_KeyUp(e)" />
+
+  <ol class="list-group scroll">
+   @foreach (BO.Category cat in this.categorySet)
+   {
+    <li class="list-group-item" @onclick="()=>ShowTaskSet(cat)" style="background-color: @(cat.CategoryID == category?.CategoryID ? "lightblue" : "white")">
+     @cat.Name
+    </li>
+   }
+  </ol>
+ </div>
+
+ <div class="MLPanel col-xs-8 col-sm-8 col-md-9 col-lg-10">
+
+  <input type="text" class="form-control" placeholder="new category name" @bind="this.newTaskTitle" @onkeyup="(e)=>NewTask_KeyUp(e)" />
+
+  <ol class="list-group scroll">
+   @foreach (var t in this.taskSet)
+   {
+    <li @key="@t.TaskID" class="list-group-item" @onclick="()=>ShowTaskDetails(t)" style="background-color: @(t.TaskID == task?.TaskID ? "lightblue" : "white")">
+
+     <input type="checkbox" name="@("done" + t.TaskID)" id="@("done" + t.TaskID)" checked="@t.Done" class="MLcheckbox" />
+
+     @t.Title @t.Created
+    </li>
+   }
+  </ol>
+ </div>
+</div>
+<hr />
+
+ Diese Seite rendert mit Blazor @this.RendererInfo.Name (Interaktiv = @this.RendererInfo.IsInteractive)

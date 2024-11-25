@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MiracleList.Client;
 
