@@ -5,7 +5,6 @@
 <h3>Herzlich Willkommen zum Blazor-Tutorial!</h3>
 Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints") zur fertigen Anwendung bringen sollen.
 
-
 <hr />
 
 @* Spalte 1: Kategorien *@
@@ -29,14 +28,12 @@ Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints")
   @foreach (var t in this.TaskSet)
   {
 
-
 @*    <li class="list-group-item"
        style="background-color:@(this.Task != null && t.TaskID == Task.TaskID ? "#E0EEFA": null)"
        @onclick="()=>ShowTaskDetails(t)"> *@
 
    <li class="list-group-item @(this.Task != null && t.TaskID == Task.TaskID ? "MLactive": null)"
        @onclick="()=>ShowTaskDetails(t)">
-
 
     <span style="float:left">
      <input type="checkbox" class="MLcheckbox" checked="@t.Done"  />
