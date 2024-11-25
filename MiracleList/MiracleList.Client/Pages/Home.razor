@@ -33,7 +33,7 @@ Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints")
        @onclick="()=>ShowTaskDetails(t)"> *@
 
    <li class="list-group-item @(this.Task != null && t.TaskID == Task.TaskID ? "MLactive": null)"
-       @onclick="()=>ShowTaskDetails(t)">
+       @onclick="()=>ShowTaskDetails(t)" style="Background-color: @((t.TaskID == this.Task?.TaskID) ? "#E0EEFA" : "white")" >
 
     <span style="float:left">
      <input type="checkbox" class="MLcheckbox" checked="@t.Done"  />

@@ -1,4 +1,5 @@
 ﻿
+using ITVisions.Blazor;
 using Microsoft.AspNetCore.Components;
 using MiracleListAPI;
 
@@ -50,6 +51,5 @@ public partial class Home
  void ShowTaskDetails(BO.Task t)
  {
   this.Task = t;
-
  }
 }
