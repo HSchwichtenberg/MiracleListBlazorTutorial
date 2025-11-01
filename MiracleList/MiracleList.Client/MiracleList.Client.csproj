@@ -9,7 +9,7 @@
 
  <!--NuGet-Pakete-->
  <ItemGroup>
-  <PackageReference Include="ITVisions.Blazor" Version="8.3.0" />
+  <PackageReference Include="ITVisions.Blazor" Version="10.*" />
   <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.*-*" />
  </ItemGroup>
 

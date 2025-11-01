@@ -8,7 +8,7 @@
  <!--NuGet-Pakete-->
  <ItemGroup>
   <ProjectReference Include="..\MiracleList.Client\MiracleList.Client.csproj" />
-  <PackageReference Include="ITVisions.Blazor" Version="8.3.0" />
+  <PackageReference Include="ITVisions.Blazor" Version="10.*" />
   <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.*-*" />
  </ItemGroup>
 

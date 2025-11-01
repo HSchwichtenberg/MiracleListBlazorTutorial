@@ -17,6 +17,10 @@ Autor: Dr. Holger Schwichtenberg, <a href="http://www.IT-Visions.de/">www.IT-Vis
   @*Beispiel: Verwendung einer Variablen*@
   .NET-Version: @DOTNETVersion
   <br />
+  ITVisions.Blazor-Version: @typeof(ITVisions.Blazor.BlazorUtil).Assembly.GetName().Version
+  <br />
+  ITVisions.AppUtil-Version: @typeof(ITVisions.CUI).Assembly.GetName().Version
+  <br />
   @*Beispiel: Nutzung eines Properties*@
   Aktueller Blazor-Render-Modus: @this.RendererInfo.Name<br>
   Ziel-Blazor-Rendermodus: @this.AssignedRenderMode?.GetType()?.Name
@@ -30,8 +34,6 @@ Autor: Dr. Holger Schwichtenberg, <a href="http://www.IT-Visions.de/">www.IT-Vis
  @ServerFramework
  </span>
 </div>
-
-
 
 @code {
  public string DOTNETVersion { get; set; } = "n/a";
@@ -48,8 +50,7 @@ Autor: Dr. Holger Schwichtenberg, <a href="http://www.IT-Visions.de/">www.IT-Vis
   var serverData = await proxy.AboutAsync();
   ServerAppVersion = serverData[6];
   ServerFramework = serverData[8];
-
-  Util.Log(DOTNETVersion);
+		Util.Log(DOTNETVersion); // Ausgabe in Browserkonsole mit Hilfsbibliothek ITVisions.Blazor -> funktioniert im Gegensatz zu Console.WriteLine auch bei Blazor Server :-)
  }
 
  protected override void OnAfterRender(bool firstRender)
