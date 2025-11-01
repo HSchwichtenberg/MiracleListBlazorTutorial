@@ -37,5 +37,3 @@ app.MapRazorComponents<App>()
     .AddAdditionalAssemblies(typeof(MiracleList.Client._Imports).Assembly);
 
 app.Run();
-
-
