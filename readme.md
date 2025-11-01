@@ -7,7 +7,7 @@ Schrittweiser Einstieg in [Blazor](https://www.dotnet-lexikon.de/ASPNET_Core_Bla
 # Voraussetzungen
 
 - [Visual Studio 2026 ab Version 18.0](https://visualstudio.microsoft.com/de/vs/)
-- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) 
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) 
 - Wichtig: Sie benötigen eine eigene [Client-ID für das cloudbasierte MiracleList-Backend](http://miraclelistbackend.azurewebsites.net/clientid)!
  
 # Aufgabenstellungen
