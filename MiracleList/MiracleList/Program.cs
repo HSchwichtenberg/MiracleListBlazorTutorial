@@ -26,6 +26,7 @@ else
  app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true); // Neu in .NET 10.0
 app.UseHttpsRedirection();
 
 app.MapStaticAssets();

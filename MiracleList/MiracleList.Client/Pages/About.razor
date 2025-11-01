@@ -12,8 +12,12 @@ Autor: Dr. Holger Schwichtenberg, <a href="http://www.IT-Visions.de/">www.IT-Vis
 @*Beispiel: Direkter Aufruf einer Methode*@
 Application Version @System.Reflection.Assembly.GetExecutingAssembly()!.GetName()!.Version!.ToString()
 <br />
-@*Beispiel: Verweis auf ein Property*@
-Blazor @this.RendererInfo.Name @Version</div>
+@*Beispiel: Verwendung einer Variablen*@
+@DOTNETVersion
+ <br />
+ @*Beispiel: Nutzung eines Properties*@
+	Aktueller Blazor-Render-Modus: @this.RendererInfo.Name (Ziel-Blazor-Rendermodus: @this.AssignedRenderMode?.GetType()?.Name)
+</div>
 
 <div style="margin-top:10px">
 @*Beispiel: Nutzung einer Information, die asynchron eingeht*@
@@ -23,7 +27,7 @@ Blazor @this.RendererInfo.Name @Version</div>
 @ServerFramework</div>
 
 @code {
- public string Version { get; set; } = "n/a";
+ public string DOTNETVersion { get; set; } = "n/a";
  public string ServerAppVersion { get; set; } = "n/a";
  public string ServerFramework { get; set; } = "n/a";
  /// <summary>
@@ -31,14 +35,14 @@ Blazor @this.RendererInfo.Name @Version</div>
  /// </summary>
  protected override async Task OnInitializedAsync()
  {
-  Version = " " + System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
+  DOTNETVersion = " " + System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
 
   // WebAPI aufrufen
   var serverData = await proxy.AboutAsync();
   ServerAppVersion = serverData[6];
   ServerFramework = serverData[8];
 
-  Util.Log(Version);
+  Util.Log(DOTNETVersion);
  }
 
  protected override void OnAfterRender(bool firstRender)
