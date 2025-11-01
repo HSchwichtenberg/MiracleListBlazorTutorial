@@ -1,25 +1,23 @@
 ﻿<h3>TaskEdit für Task @Task.TaskID</h3>
 
-<form>
 
- <button type="button" title="Speichern" @onclick="Save" class="btn btn-success">Speichern</button>
- <button type="button" title="Abbrechen" @onclick="Cancel" class="btn btn-warning">Abbrechen</button>
+<button title="Speichern" @onclick="Save" class="btn btn-success">Speichern</button>
+<button title="Abbrechen" @onclick="Cancel" class="btn btn-warning">Abbrechen</button>
 
- <div class="form-group">
-  <label for="Title">Titel</label>
-  <input type="text" class="form-control" id="Title" @bind="Task.Title" />
- </div>
+<div class="form-group">
+ <label for="Title">Titel</label>
+ <input type="text" class="form-control" id="Title" @bind="Task.Title" />
+</div>
 
- <div class="form-group">
-  <label for="Title">Fällig am</label>
-  <input type="date" class="form-control" id="Title" @bind="Task.Due" />
- </div>
+<div class="form-group">
+ <label for="Title">Fällig am</label>
+ <input type="date" class="form-control" id="Title" @bind="Task.Due" />
+</div>
 
- <select id="taskimportance" name="taskimportance" @bind="Task.ImportanceNN" class="form-control">
-  @foreach (object s in System.Enum.GetValues(typeof(BO.Importance)))
-  {
-   <option value="@s">@s</option>
-  }
- </select>
+<select id="taskimportance" name="taskimportance" @bind="Task.ImportanceNN" class="form-control">
+ @foreach (object s in System.Enum.GetValues(typeof(BO.Importance)))
+ {
+  <option value="@s">@s</option>
+ }
+</select>
 
-</form>

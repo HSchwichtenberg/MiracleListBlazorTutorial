@@ -15,8 +15,6 @@ public partial class Home(MiracleList.AuthenticationManager am, MiracleListProxy
  //[Inject]
  //public AuthenticationManager am { get; set; }
 
-
-
  private Task Persist()
  {
   ApplicationState.PersistAsJson(nameof(categorySet), categorySet);
@@ -130,6 +128,7 @@ public partial class Home(MiracleList.AuthenticationManager am, MiracleListProxy
   if (save)
   {
    await proxy.ChangeTaskAsync(this.task, am.Token);
+   this.task = null;
   }
   else
   {
