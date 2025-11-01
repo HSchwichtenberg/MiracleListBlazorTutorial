@@ -18,4 +18,10 @@
   <ProjectReference Include="..\..\MiracleListAPI_Proxy\MiracleListAPI_Proxy.csproj" />
  </ItemGroup>
 
+	<!--Einstellungen speziell für Blazor WebAssembly-->
+	<PropertyGroup>
+		 <!--Ab .NET 10.0 notwendig, da generierter Proxy noch kein Response Streaming nutzt-->
+		<WasmEnableStreamingResponse>false</WasmEnableStreamingResponse>
+	</PropertyGroup>
+
 </Project>

@@ -7,8 +7,8 @@
   <img @onclick="@ShowAbout" src="/img/MiracleListLogo.jpg" />
  </span>
  <!--  Anzeige dieses Blocks oben nur auf großen Displays -->
- <span class="col-xs-6 col-lg-9 col-sm-7 col-md-8 hidden-xs" style="vertical-align: middle">
-  @status
+ <span class="col-xs-6 col-lg-9 col-sm-7 col-md-8 hidden-xs" style="margin-top:3px">
+  @((MarkupString)status)
  </span>
  <span class="col-xs-1">
 
@@ -32,14 +32,22 @@
 <!-- Alternative Anzeige dieses Blocks unten auf kleinen Displays -->
 <div class="row">
  <span class="col-xs-12 hidden-sm hidden-md hidden-lg">
-  @*<Status></Status>*@
-  @status
+  <hr />
+  @((MarkupString)status)
  </span>
 </div>
 
 @code
 {
- string status = "";
+ string status => "Anwendungsversion: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + "<br>" + System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription + "<br>Blazor " + this.RendererInfo.Name;
+
+ protected override void OnInitialized()
+ {
+		// Ausgabe der	Render-Modi in der Debug-Konsole
+  var renderMode = $"RenderMode = {this.RendererInfo.Name} -> {this.AssignedRenderMode?.GetType()?.Name}";
+		var linie = new string('=', renderMode.Length);
+  System.Diagnostics.Debug.WriteLine($"{linie}\n{renderMode}\n{linie}");
+ }
 
  public void ShowAbout()
  {

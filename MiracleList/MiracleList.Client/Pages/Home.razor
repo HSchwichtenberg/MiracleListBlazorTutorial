@@ -11,7 +11,7 @@ Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints")
  <input name="newCategoryName" type="text" class="form-control" @bind="newCategoryName" @onkeyup="(e) => NewCategory_Keyup(e)" placeholder="new Category..." />
 
  <ol class="list-group scroll">
-  @foreach (var c in this.CategorySet)
+  @foreach (var c in this.CategorySet ?? new List<BO.Category>())
   {
    <li class="list-group-item"
        style="background-color:@GetCategoryColor(c)"
@@ -31,7 +31,7 @@ Dies ist der Ausgangszustand, den Sie nun in fünf großen Schritten ("Sprints")
 
  <ol class="list-group scroll">
 
-  @foreach (var t in this.TaskSet)
+  @foreach (var t in this.TaskSet ?? new List<BO.Task>())
   {
 
    @*    <li class="list-group-item"

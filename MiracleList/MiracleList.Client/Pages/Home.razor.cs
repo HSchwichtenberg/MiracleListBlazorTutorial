@@ -22,10 +22,14 @@ public partial class Home
   Util.Log(nameof(Home));
  }
 
+ [PersistentState]
  public List<BO.Category> CategorySet { get; set; } = new();
+ [PersistentState]
  public List<BO.Task> TaskSet { get; set; } = new();
+
  public BO.Category Category { get; set; }
- public BO.Task Task { get; set; }
+
+public BO.Task Task { get; set; }
 
  string newCategoryName { get; set; }
  string newTaskTitle { get; set; }
@@ -35,8 +39,12 @@ public partial class Home
   Util.Log("Login", await am.Login());
   Util.Log("Token", am.Token);
 
-  await ShowCategorySet();
-  if (this.CategorySet.Count > 0) await ShowTaskSet(CategorySet[0]);
+
+  if (this.CategorySet == null || this.TaskSet == null)
+  {
+   await ShowCategorySet();
+   if (this.CategorySet.Count > 0) await ShowTaskSet(CategorySet[0]);
+  }
 
   Util.Log("Category Count", CategorySet.Count);
  }

@@ -3,13 +3,16 @@ body {
  background: rgba(255, 221, 134, 1) !important;
 }
 
-
 /* @media screen and (max-width: 767px) {
     .MLPanel {
         padding-left: 2px;
         padding-right: 2px;
     }
 } */
+
+hr {
+ border-color: #337ab7; border-width: 2px;
+}
 
 .MLPanel {
  padding-right: 2px;

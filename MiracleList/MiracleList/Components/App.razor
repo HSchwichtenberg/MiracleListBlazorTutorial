@@ -2,18 +2,16 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<base href="/" />
 	<!--Bootstrap und eigenes Styles -->
 	<link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
-	<link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-	<link href="styles.css" rel="stylesheet" />
-	<script src="js/jquery.js" defer></script>
-	<script src="js/bootstrap.min.js" defer></script>
+	<link href="@Assets["css/bootstrap/bootstrap.min.css"]" rel="stylesheet" />
+	<link href="@Assets["styles.css"]" rel="stylesheet" />
+	<script src="@Assets["js/jquery.js"]" defer></script>
+	<script src="@Assets["js/bootstrap.min.js"]" defer></script>
 	<!--Style Bundle -->
 	<link rel="stylesheet" href="@Assets["MiracleList.styles.css"]" />
 	<link rel="stylesheet" href="@Assets["_content/MiracleList.Client/MiracleList.Client.bundle.scp.css"]" />
@@ -23,13 +21,24 @@
 </head>
 
 <body>
-
 	<div class="container-fluid">
 		<Routes @rendermode="InteractiveAuto" />
 		<ReconnectModal />
 		<script src="@Assets["_framework/blazor.web.js"]"></script>
 	</div>
-
 </body>
 
 </html>
+
+@* 
+Render-Modus einstellen bei <HeadOutlet> und <Routes>
+----------------------------------------------------
+@rendermode="InteractiveServer": Static -> Server
+@rendermode="InteractiveWebAssembly": Static -> WebAssembly
+@rendermode="InteractiveAuto": Static -> Server -> WebAssembly
+
+Prerendering abschalten:
+@rendermode="new InteractiveServerRenderMode(prerender: false)"
+@rendermode="new InteractiveServerRenderMode(prerender: false)"
+@rendermode="new InteractiveAutoRenderMode(prerender: false)"
+*@

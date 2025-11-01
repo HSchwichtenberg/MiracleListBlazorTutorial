@@ -4,27 +4,34 @@
 @inject MiracleListAPI.MiracleListProxy proxy
 @inject NavigationManager nav
 
-<h3>Über diese Anwendung</h3>
+<h3>Über diese Tutorial-Anwendung</h3>
 Autor: Dr. Holger Schwichtenberg, <a href="http://www.IT-Visions.de/">www.IT-Visions.de</a>
-<br />
-<div style="margin-top:10px">
-<h4>Client</h4>
-@*Beispiel: Direkter Aufruf einer Methode*@
-Application Version @System.Reflection.Assembly.GetExecutingAssembly()!.GetName()!.Version!.ToString()
-<br />
-@*Beispiel: Verwendung einer Variablen*@
-@DOTNETVersion
+<hr />
+<div class="row" style="margin-top:10px">
+
+ <span class="col-xs-12 col-md-6" style="margin-bottom:20px">
+  <h4>Client</h4>
+  @*Beispiel: Direkter Aufruf einer Methode*@
+  Application Version: @System.Reflection.Assembly.GetExecutingAssembly()!.GetName()!.Version!.ToString()
+  <br />
+  @*Beispiel: Verwendung einer Variablen*@
+  .NET-Version: @DOTNETVersion
+  <br />
+  @*Beispiel: Nutzung eines Properties*@
+  Aktueller Blazor-Render-Modus: @this.RendererInfo.Name<br>
+  Ziel-Blazor-Rendermodus: @this.AssignedRenderMode?.GetType()?.Name
+ </span>
+
+ <span class="col-xs-12 col-md-6">
+ @*Beispiel: Nutzung einer Information, die asynchron eingeht*@
+ <h4>Server (WebAPI-Backend)</h4>
+ @ServerAppVersion
  <br />
- @*Beispiel: Nutzung eines Properties*@
-	Aktueller Blazor-Render-Modus: @this.RendererInfo.Name (Ziel-Blazor-Rendermodus: @this.AssignedRenderMode?.GetType()?.Name)
+ @ServerFramework
+ </span>
 </div>
 
-<div style="margin-top:10px">
-@*Beispiel: Nutzung einer Information, die asynchron eingeht*@
-<h4>Server (WebAPI-Backend)</h4>
-@ServerAppVersion
-<br />
-@ServerFramework</div>
+
 
 @code {
  public string DOTNETVersion { get; set; } = "n/a";
