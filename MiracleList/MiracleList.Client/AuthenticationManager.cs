@@ -12,9 +12,9 @@ public class AuthenticationManager(MiracleListProxy proxy, BlazorUtil util)
  public async Task<bool> Login()
  {
   var loginInfo = new LoginInfo();
-  loginInfo.ClientID = "88680afc-e010-43cc-9afd-37e43bd165c6";
-  loginInfo.Username = "maxmuster@devdays24.de";
-  loginInfo.Password = "geheim";
+  loginInfo.ClientID = "TODO"; // bitte beantragen auf https://miraclelistbackend.azurewebsites.net/clientid
+  loginInfo.Username = "IhreEMailAdresse";
+  loginInfo.Password = "SelbstgewähltesKennwort";
   try
   {
    var loginInfoResult = await proxy.LoginAsync(loginInfo);
