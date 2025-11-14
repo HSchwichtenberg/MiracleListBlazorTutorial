@@ -11,87 +11,79 @@
 	<ITVisions.Blazor.Controls.ProgressColorful></ITVisions.Blazor.Controls.ProgressColorful>
 }
 
-@if (this.CategorySet != null)
-{
-	<div class="row" style="margin:10px">
 
-		@* ------------- Spalte 1: Kategorien *@
-		<div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2">
+<PageTitle>MiracleList @System.Reflection.Assembly.GetEntryAssembly()!.GetName().Version</PageTitle>
 
 
+@* -------------------- Spalte 1: Kategorien *@
+<div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2 @(this.Task!=null ? "hidden-sm hidden-xs": ""  )">
+ <input name="newCategoryName" type="text" class="form-control" @bind="newCategoryName" @onkeyup="(e) => NewCategory_Keyup(e)" placeholder="new Category..." />
 
-			@if (this.CategorySet.Count > 0)
-			{
-				<h4>
-					@this.CategorySet.Count Categories
-				</h4>
-			}
+ <ol class="list-group scroll">
+  @foreach (var c in this.CategorySet)
+  {
+   <li class="list-group-item"
+       style="background-color:@GetCategoryColor(c)"
+       @onclick="()=>ShowTaskSet(c)">
+    <span id="Remove" style="float:right;" class="glyphicon glyphicon-remove-circle"
+          @onclick="() => RemoveCategory(c)"></span>      
+       @c.Name</li>
+  }
+ </ol>
 
-			<input name="newCategoryName" type="text" class="form-control" @bind="NewCategoryName" placeholder="New Category..." @bind:after="NewCategory" />
-			<ol class="list-group scroll">
-				@foreach (var c in this.CategorySet)
-				{
-					<li class="list-group-item"
-									style="background-color:@GetCategoryColor(c)"
-									@onclick="() => ShowTaskSet(c)">@c.Name</li>
-				}
-			</ol>
+</div>
 
-		</div>
+@* -------------------- Spalte 2: Aufgaben *@
+<div class="MLPanel @(this.Task==null ? "col-xs-8 col-sm-8 col-md-9 col-lg-10": "hidden-xs col-sm-6 col-md-5 col-lg-6"  )">
+ <input name="newTaskTitle" type="text" class="form-control" disabled="@(this.Category == null)" @bind="newTaskTitle" @onkeyup="(e) => NewTask_Keyup(e)" placeholder="new Task..." />
 
-		@* ------------- Spalte 2: Aufgaben *@
-		@if (this.TaskSet != null)
-		{
-			<div class="MLPanel col-xs-8 col-sm-8 col-md-9 col-lg-10">
+ <ol class="list-group scroll">
 
-				
-				@if (this.TaskSet.Count > 0)
-				{
-					<h4>@this.TaskSet.Count Tasks in Category <i>@this.Category?.Name</i></h4>
-				}
+  @foreach (var t in this.TaskSet)
+  {
 
-				<input type="text" class="form-control" @bind="NewTaskName" placeholder="New Task..." @bind:after="NewTask" />
+   @*    <li class="list-group-item"
+  style="background-color:@(this.Task != null && t.TaskID == Task.TaskID ? "#E0EEFA": null)"
+  @onclick="()=>ShowTaskDetails(t)"> *@
 
-				<ol class="list-group scroll">
-					@foreach (var t in this.TaskSet)
-					{
+   <li class="list-group-item @(this.Task != null && t.TaskID == Task.TaskID ? "MLactive": null)"
+       @onclick="()=>ShowTaskDetails(t)">
 
-						@*    <li class="list-group-item"
-       style="background-color:@(this.Task != null && t.TaskID == Task.TaskID ? "#E0EEFA": null)"
-       @onclick="()=>ShowTaskDetails(t)"> *@
+    <span id="Remove" style="float:right;" class="glyphicon glyphicon-remove-circle"
+          @onclick="() => RemoveTask(t)"></span>
 
-						<li class="list-group-item @((t.TaskID == this.Task?.TaskID) ? "MLactive" : "")"
-										@onclick="() => ShowTaskDetails(t)">
+    <span style="float:left">
+     <input type="checkbox" class="MLcheckbox" @bind="t.Done" @onclick:stopPropagation="true" @bind:after='async ()=> {
+await proxy.ChangeTaskDoneAsync(t.TaskID, t.Done, am.Token); Util.Log("Done Changed: " + t.Done); }'
+ sto
+ />
+    </span>
+    <b>@t.Title</b>
+    <br />
+    @if (t.Due.HasValue)
+    {
+     if (t.Due.Value > DateTime.Now)
+     {
+      <div>
+       due at @t.Due.Value.ToShortDateString()
+      </div>
+     }
+     else
+     {
+      <div style="color:red">
+       due since @t.Due.Value.ToShortDateString()
+      </div>
+     }
+    }
+   </li>
+  }
+ </ol>
+</div>
 
-							<span style="float:left">
-								<input type="checkbox" class="MLcheckbox" @bind="@t.Done" @bind:after="()=>DoneChanged(t)" />
-							</span>
-							<b>@t.Title</b>
-							<br />
-							@if (t.Due.HasValue)
-							{
-								if (t.Due.Value > DateTime.Now)
-								{
-									<div>
-										due at @t.Due.Value.ToShortDateString()
-									</div>
-								}
-								else
-								{
-									<div style="color:red">
-										due since @t.Due.Value.ToShortDateString()
-									</div>
-								}
-							}
+ @* -------------------- Spalte 3: Task Edit *@
+ <div class="MLPanel col-xs-12 col-sm-6 col-md-4 col-lg-4">
 
-						</li>
-					}
-				</ol>
-			</div>
-		}
+ <TaskEdit Task="Task" TaskHasChanged="TaskHasChanged"></TaskEdit>
 
-	</div>
-}
+ </div>
 
-<hr />
-@nav.Uri.ToString()

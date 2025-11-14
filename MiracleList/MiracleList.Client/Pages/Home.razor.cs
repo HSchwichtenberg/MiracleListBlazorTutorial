@@ -23,11 +23,11 @@ public partial class Home
 
  public List<BO.Category> CategorySet { get; set; } = new();
  public List<BO.Task> TaskSet { get; set; } = new();
- public BO.Category Category { get; set; }
- public BO.Task Task { get; set; }
+ public BO.Category? Category { get; set; }
+ public BO.Task? Task { get; set; }
 
- string newCategoryName { get; set; }
- string newTaskTitle { get; set; }
+ string newCategoryName { get; set; } = "";
+ string newTaskTitle { get; set; } = "";
 
  protected override async Task OnInitializedAsync()
  {
@@ -73,15 +73,15 @@ public partial class Home
   await ShowTaskSet(newcategory);
  }
 
- public async Task TaskHasChanged(bool b)
+ public async Task TaskHasChanged(bool saved)
  {
-  if (b)
+  if (!saved) // Neuladen, um zu altem Zustand des Task-Objekts zu kommen! Alternative: Undo selbst implementieren!
   {
-   await proxy.ChangeTaskAsync(Task, am.Token);
+   await ShowTaskSet(Category);
   }
   else
   {
-   await ShowTaskSet(Category);
+   // this.StateHasChanged() wäre im Fall true notwendig, wenn wir nicht noch eine Eigenschaft verändern, um das Rendering wieder anzustoßen, um den gespeicherten Wert anzuzeigen!
   }
   this.Task = null;
  }
