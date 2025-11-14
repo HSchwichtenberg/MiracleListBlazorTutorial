@@ -16,6 +16,9 @@ public partial class Home
  [Inject]
  IJSRuntime js { get; set; }
 
+ [Inject]
+ NavigationManager nav { get; set; }
+
  protected override void OnInitialized()
  {
   Util.Log(nameof(Home));
@@ -135,6 +138,7 @@ public partial class Home
  /// </summary>
  public async System.Threading.Tasks.Task RemoveTask(BO.Task t)
  {
+  await js.SetValueAsync("document.title", "Nachfrage");
   // Rückfrage (Browser-Dialog via JS!)
   if (!await js.InvokeAsync<bool>("confirm", "Remove Task #" + t.TaskID + ": " + t.Title + "?")) return;
   // Löschen via WebAPI-Aufruf
@@ -143,6 +147,7 @@ public partial class Home
   await ShowTaskSet(this.Category);
   // aktuelle Aufgabe zurücksetzen
   this.Task = null;
+  await js.SetValueAsync("document.title", "MiracleList");
  }
 
  /// <summary>
