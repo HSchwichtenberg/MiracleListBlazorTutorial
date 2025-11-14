@@ -6,69 +6,92 @@
 
 <PageTitle>MiracleList @System.Reflection.Assembly.GetEntryAssembly()!.GetName().Version</PageTitle>
 
-<div class="row" style="margin:10px">
+@if (this.CategorySet == null || this.CategorySet.Count == 0)
+{
+	<ITVisions.Blazor.Controls.ProgressColorful></ITVisions.Blazor.Controls.ProgressColorful>
+}
 
-	@* Spalte 1: Kategorien *@
-	<div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2">
+@if (this.CategorySet != null)
+{
+	<div class="row" style="margin:10px">
 
-		<h4>
-			@this.CategorySet.Count Categories
-		</h4>
-		<ol class="list-group scroll">
-			@foreach (var c in this.CategorySet)
+		@* ------------- Spalte 1: Kategorien *@
+		<div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2">
+
+
+
+			@if (this.CategorySet.Count > 0)
 			{
-				<li class="list-group-item"
-								style="background-color:@GetCategoryColor(c)"
-								@onclick="() => ShowTaskSet(c)">@c.Name</li>
+				<h4>
+					@this.CategorySet.Count Categories
+				</h4>
 			}
-		</ol>
 
-	</div>
-
-	@* Spalte 2: Aufgaben *@
-	@if (this.TaskSet != null)
-	{
-		<div class="MLPanel col-xs-8 col-sm-8 col-md-9 col-lg-10">
-			<h4>@this.TaskSet.Count Tasks in Category <i>@this.Category?.Name</i></h4>
+			<input name="newCategoryName" type="text" class="form-control" @bind="NewCategoryName" placeholder="New Category..." @bind:after="NewCategory" />
 			<ol class="list-group scroll">
-				@foreach (var t in this.TaskSet)
+				@foreach (var c in this.CategorySet)
 				{
+					<li class="list-group-item"
+									style="background-color:@GetCategoryColor(c)"
+									@onclick="() => ShowTaskSet(c)">@c.Name</li>
+				}
+			</ol>
 
-					@*    <li class="list-group-item"
+		</div>
+
+		@* ------------- Spalte 2: Aufgaben *@
+		@if (this.TaskSet != null)
+		{
+			<div class="MLPanel col-xs-8 col-sm-8 col-md-9 col-lg-10">
+
+				
+				@if (this.TaskSet.Count > 0)
+				{
+					<h4>@this.TaskSet.Count Tasks in Category <i>@this.Category?.Name</i></h4>
+				}
+
+				<input type="text" class="form-control" @bind="NewTaskName" placeholder="New Task..." @bind:after="NewTask" />
+
+				<ol class="list-group scroll">
+					@foreach (var t in this.TaskSet)
+					{
+
+						@*    <li class="list-group-item"
        style="background-color:@(this.Task != null && t.TaskID == Task.TaskID ? "#E0EEFA": null)"
        @onclick="()=>ShowTaskDetails(t)"> *@
 
-					<li class="list-group-item @((t.TaskID == this.Task?.TaskID) ? "MLactive" : "")"
-									@onclick="() => ShowTaskDetails(t)">
+						<li class="list-group-item @((t.TaskID == this.Task?.TaskID) ? "MLactive" : "")"
+										@onclick="() => ShowTaskDetails(t)">
 
-						<span style="float:left">
-							<input type="checkbox" class="MLcheckbox" checked="@t.Done" />
-						</span>
-						<b>@t.Title</b>
-						<br />
-						@if (t.Due.HasValue)
-						{
-							if (t.Due.Value > DateTime.Now)
+							<span style="float:left">
+								<input type="checkbox" class="MLcheckbox" @bind="@t.Done" @bind:after="()=>DoneChanged(t)" />
+							</span>
+							<b>@t.Title</b>
+							<br />
+							@if (t.Due.HasValue)
 							{
-								<div>
-									due at @t.Due.Value.ToShortDateString()
-								</div>
+								if (t.Due.Value > DateTime.Now)
+								{
+									<div>
+										due at @t.Due.Value.ToShortDateString()
+									</div>
+								}
+								else
+								{
+									<div style="color:red">
+										due since @t.Due.Value.ToShortDateString()
+									</div>
+								}
 							}
-							else
-							{
-								<div style="color:red">
-									due since @t.Due.Value.ToShortDateString()
-								</div>
-							}
-						}
 
-					</li>
-				}
-			</ol>
-		</div>
-	}
+						</li>
+					}
+				</ol>
+			</div>
+		}
 
-</div>
+	</div>
+}
 
-							<hr />
-							@nav.Uri.ToString()
+<hr />
+@nav.Uri.ToString()
