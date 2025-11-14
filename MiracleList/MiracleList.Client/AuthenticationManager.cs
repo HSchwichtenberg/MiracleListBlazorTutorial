@@ -7,43 +7,41 @@ namespace MiracleList.Client;
 public class AuthenticationManager(MiracleListProxy proxy, BlazorUtil util)
 {
 
- public string Token { get; set; }
+    public string Token { get; set; }
 
- public async Task<bool> Login()
- {
-  var loginInfo = new LoginInfo();
-  loginInfo.ClientID = "88680afc-e010-43cc-9afd-37e43bd165c6";
-  loginInfo.Username = "maxmuster@devdays24.de";
-  loginInfo.Password = "geheim";
-  try
-  {
-   var loginInfoResult = await proxy.LoginAsync(loginInfo);
+    public async Task<bool> Login()
+    {
+        var loginInfo = new LoginInfo();
+        loginInfo.ClientID = "88680afc-e010-43cc-9afd-37e43bd165c6";
+        loginInfo.Username = "Maxi@Mustermann.de";
+        loginInfo.Password = "geheim";
+        try
+        {
+            var loginInfoResult = await proxy.LoginAsync(loginInfo);
 
-   if (loginInfoResult != null && !String.IsNullOrEmpty(loginInfoResult.Token)
-    )
-   {
-    // erfolgreich
-    util.Log("Anmeldung ok. Token = " + loginInfoResult.Token);
-    this.Token = loginInfoResult.Token;
-    return true;
-   }
-   else
-   {
-    // nicht erfolgreich
-    util.Warn("Anmeldung nicht ok " + loginInfoResult?.Message);
-    this.Token = "";
-    return false;
-   }
-  }
-  catch (Exception ex)
-  {
-   util.Warn("Anmeldung nicht möglich " + ex.Message);
-   this.Token = "";
-   return false;
-  }
+            if (loginInfoResult != null && !String.IsNullOrEmpty(loginInfoResult.Token)
+             )
+            {
+                // erfolgreich
+                util.Log("Anmeldung ok. Token = " + loginInfoResult.Token);
+                this.Token = loginInfoResult.Token;
+                return true;
+            }
+            else
+            {
+                // nicht erfolgreich
+                util.Warn("Anmeldung nicht ok " + loginInfoResult?.Message);
+                this.Token = "";
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            util.Warn("Anmeldung nicht möglich " + ex.Message);
+            this.Token = "";
+            return false;
+        }
 
-
- }
-
+    }
 
 }
