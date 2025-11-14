@@ -8,7 +8,7 @@ namespace MiracleList.Client;
 // Primärkonstruktorparameter werden per DI befüllt!!!
 public class AuthenticationManager(MiracleListProxy proxy, BlazorUtil util) : AuthenticationStateProvider
 {
- private const string clientID = "Bitte eintragen!"; // https://miraclelistbackend.azurewebsites.net/clientid
+ private const string clientID = "TODO"; // https://miraclelistbackend.azurewebsites.net/clientid
 
  public string Token { get; set; }
 
@@ -23,6 +23,10 @@ public class AuthenticationManager(MiracleListProxy proxy, BlazorUtil util) : Au
   return await LoginInternal(loginInfo);
  }
 
+ /// <summary>
+ /// Nur für Debugging
+ /// </summary>
+ /// <returns></returns>
  public async Task<bool> Login()
  {
   var loginInfo = new LoginInfo();

@@ -11,15 +11,10 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-<<<<<<< HEAD
 #region Authentifizierung und Autorisierung nutzen
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication().AddScheme<MLAuthSchemeOptions, MLAuthSchemeHandler>("ML", opts => { }); // notwendig, damit bei Static SSR Prerendering Zugriffe auf Unterseiten zum Fehler 401 führen, der dann auf /login umgeleitet wird
 #endregion
-=======
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddAuthentication().AddScheme<MLAuthSchemeOptions, MLAuthSchemeHandler>("ML", opts => { }); // notwendig, damit bei Static SSR Prerendering Zugriffe auf Unterseiten zum Fehler 401 führen, der dann auf /login umgeleitet wird
->>>>>>> 62da502e57cfb015f9f6f58f8f7ae21ec2712220
 
 SharedDI.AddServices(builder.Services);
 
