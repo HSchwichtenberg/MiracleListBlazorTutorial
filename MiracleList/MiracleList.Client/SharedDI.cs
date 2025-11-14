@@ -22,7 +22,7 @@ public class SharedDI
   #region DI Authentifizierungsdienste
   services.AddOptions(); // notwendig für AuthenticationStateProvider
   services.AddCascadingAuthenticationState(); // neu seit Blazor 8.0
-  services.AddScoped<AuthenticationStateProvider, AuthenticationManager>();
+  services.AddScoped<AuthenticationStateProvider, AuthenticationManager>(); // unser AuthenticationManager übernimmt die Rolle des AuthenticationStateProvider
   services.AddAuthorizationCore();
   #endregion
 
