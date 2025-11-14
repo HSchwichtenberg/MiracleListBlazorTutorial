@@ -1,14 +1,55 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using MiracleListAPI;
 
 namespace MiracleList.Client.Pages;
 
-public partial class Home(AuthenticationManager am, MiracleListProxy proxy, NavigationManager nav)
+public partial class Home
 {
- //[Inject]
- //AuthenticationManager am { get; set; }
- //[Inject]
- //MiracleListProxy proxy { get; set; }
+ [Inject]
+ public AuthenticationManager am { get; set; }
+ [Inject]
+ public MiracleListProxy proxy { get; set; }
+
+ [Inject]
+ IJSRuntime js { get; set; }
+
+ protected override void OnInitialized()
+ {
+  Util.Log(nameof(Home));
+ }
+
+ public List<BO.Category> CategorySet { get; set; } = new();
+ public List<BO.Task> TaskSet { get; set; } = new();
+ public BO.Category Category { get; set; }
+ public BO.Task Task { get; set; }
+
+ string newCategoryName { get; set; }
+ string newTaskTitle { get; set; }
+
+ protected override async Task OnInitializedAsync()
+ {
+  Util.Log("Login", await am.Login());
+  Util.Log("Token", am.Token);
+
+  await ShowCategorySet();
+  if (this.CategorySet.Count > 0) await ShowTaskSet(CategorySet[0]);
+
+  Util.Log("Category Count", CategorySet.Count);
+ }
+
+ async Task ShowCategorySet()
+ {
+  this.CategorySet = await proxy.CategorySetAsync(am.Token);
+ }
+
+ async Task ShowTaskSet(BO.Category c)
+ {
+  this.Category = c;
+  this.TaskSet = await proxy.TaskSetAsync(c.CategoryID, am.Token);
+ }
 
  bool IsActiveCategory(BO.Category c)
  {
@@ -20,76 +61,102 @@ public partial class Home(AuthenticationManager am, MiracleListProxy proxy, Navi
   return IsActiveCategory(c) ? "#E0EEFA" : null;
  }
 
- protected override void OnInitialized()
- {
-  Util.Log(nameof(Home));
- }
-
- [PersistentState]
- public List<BO.Category> CategorySet { get; set; } = new();
- [PersistentState]
- public List<BO.Task> TaskSet { get; set; } = new();
- [PersistentState]
- public BO.Category Category { get; set; }
- [PersistentState]
- public BO.Task Task { get; set; }
-
- public string NewCategoryName { get; set; }
- public string NewTaskName { get; set; }
-
- protected override async Task OnInitializedAsync()
- {
-  Util.Log("Login", await am.Login());
-  Util.Log("Token", am.Token);
-
-  if (CategorySet == null || CategorySet.Count == 0)
-  {
-   CategorySet = await proxy.CategorySetAsync(am.Token);
-   if (CategorySet.Any()) await ShowTaskSet(CategorySet.First());
-   Util.Log("Category Count", CategorySet.Count);
-  }
- }
-
- async Task ShowTaskSet(BO.Category c)
- {
-  this.Category = c;
-  this.TaskSet = await proxy.TaskSetAsync(c.CategoryID, am.Token);
- }
-
  void ShowTaskDetails(BO.Task t)
  {
   this.Task = t;
  }
 
- async Task NewCategory()
+ public async Task newCatEvent()
  {
-  var newCategory = await proxy.CreateCategoryAsync(this.NewCategoryName, am.Token);
-  CategorySet.Add(newCategory);
-  this.NewCategoryName = "";
+  var newcategory = await proxy.CreateCategoryAsync(newCategoryName, am.Token);
+  await ShowCategorySet();
+  await ShowTaskSet(newcategory);
  }
 
- async Task NewTask()
+ public async Task TaskHasChanged(bool b)
  {
-  var newTask = new BO.Task();
-  newTask.Title = this.NewTaskName;
-  newTask.CategoryID = this.Category.CategoryID;   //alternativ: newTask.Category = this.Category;
-  newTask.Due = DateTime.Now.AddDays(1);
-  await proxy.CreateTaskAsync(newTask, am.Token);
-  TaskSet.Add(newTask);
-  this.NewTaskName = "";
-
- }
-
- public async Task DoneChanged(BO.Task t)
- {
-  try
+  if (b)
   {
-   await proxy.ChangeTaskDoneAsync(t.TaskID, t.Done, am.Token);
+   await proxy.ChangeTaskAsync(Task, am.Token);
   }
-  catch (Exception ex)
+  else
   {
-   Util.Log("Fehler: " + ex.Message);
+   await ShowTaskSet(Category);
+  }
+  this.Task = null;
+ }
+
+ /// <summary>
+ /// Use Keyup instead of Keypress as the actual data binding did not yet happen when Keypress is fired
+ /// </summary>
+ public async Task NewCategory_Keyup(KeyboardEventArgs e)
+ {
+  if (e.Key == "Enter")
+  {
+   if (!String.IsNullOrEmpty(this.newCategoryName))
+   {
+    var newcategory = await proxy.CreateCategoryAsync(newCategoryName, am.Token);
+    await ShowCategorySet();
+    await ShowTaskSet(newcategory);
+   }
   }
  }
 
+ /// <summary>
+ /// Use Keyup instead of Keypress as the actual data binding did not yet happen when Keypress is fired
+ /// </summary>
+ public async Task NewTask_Keyup(KeyboardEventArgs e)
+ {
+  if (e.Key == "Enter")
+  {
+   if (!String.IsNullOrEmpty(this.newTaskTitle))
+   {
+    if (string.IsNullOrEmpty(newTaskTitle)) return;
+    var t = new BO.Task();
+    t.TaskID = 0; // notwendig für Server, da der die ID vergibt
+    t.Title = newTaskTitle;
+    t.CategoryID = this.Category.CategoryID;
+    t.Importance = BO.Importance.B;
+    t.Created = DateTime.Now;
+    t.Due = null;
+    t.Order = 0;
+    t.Note = "";
+    t.Done = false;
+    await proxy.CreateTaskAsync(t, am.Token);
+    await ShowTaskSet(this.Category);
+    this.newTaskTitle = "";
+   }
+  }
+ }
+
+ /// <summary>
+ /// Ereignisbehandlung: Benutzer löscht Aufgabe
+ /// </summary>
+ public async System.Threading.Tasks.Task RemoveTask(BO.Task t)
+ {
+  // Rückfrage (Browser-Dialog via JS!)
+  if (!await js.InvokeAsync<bool>("confirm", "Remove Task #" + t.TaskID + ": " + t.Title + "?")) return;
+  // Löschen via WebAPI-Aufruf
+  await proxy.DeleteTaskAsync(t.TaskID, am.Token);
+  // Liste der Aufgaben neu laden
+  await ShowTaskSet(this.Category);
+  // aktuelle Aufgabe zurücksetzen
+  this.Task = null;
+ }
+
+ /// <summary>
+ /// Ereignisbehandlung: Benutzer löscht Kategorie
+ /// </summary>
+ /// <param name="c">zu löschende Kategorie</param>
+ public async System.Threading.Tasks.Task RemoveCategory(BO.Category c)
+ {
+  // Rückfrage (Browser-Dialog via JS!)
+  if (!await js.InvokeAsync<bool>("confirm", "Remove Category #" + c.CategoryID + ": " + c.Name + "?")) return;
+  // Löschen via WebAPI-Aufruf
+  await proxy.DeleteCategoryAsync(c.CategoryID, am.Token);
+  // Liste der Kategorien neu laden
+  await ShowCategorySet();
+  // aktuelle Category zurücksetzen
+  this.Category = null;
+ }
 }
