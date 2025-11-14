@@ -1,6 +1,27 @@
-﻿<Router AppAssembly="typeof(Program).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
-        <FocusOnNavigate RouteData="routeData" Selector="h1" />
-    </Found>
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.WebAssembly.Services
+
+<Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(NotFound)">
+
+	<Found Context="routeData">
+
+		<AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
+
+			<Authorizing>
+				<h2 style="text-align:center">Authorizing...</h2>
+			</Authorizing>
+
+			<NotAuthorized>
+				@{
+					NavigationManager.NavigateTo("/login");
+				}
+			</NotAuthorized>
+
+		</AuthorizeRouteView>
+		<FocusOnNavigate RouteData="@routeData" Selector="h1" />
+
+	</Found>
+
 </Router>

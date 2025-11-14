@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using MiracleListAPI;
@@ -9,7 +10,7 @@ namespace MiracleList.Client.Pages;
 public partial class Home
 {
  [Inject]
- public AuthenticationManager am { get; set; }
+ public AuthenticationStateProvider am { get; set; }
  [Inject]
  public MiracleListProxy proxy { get; set; }
 
@@ -34,8 +35,8 @@ public partial class Home
 
  protected override async Task OnInitializedAsync()
  {
-  Util.Log("Login", await am.Login());
-  Util.Log("Token", am.Token);
+  //Util.Log("Login", await am.Login());
+  //Util.Log("Token", am.Token);
 
   await ShowCategorySet();
   if (this.CategorySet.Count > 0) await ShowTaskSet(CategorySet[0]);
@@ -45,14 +46,14 @@ public partial class Home
 
  async Task ShowCategorySet()
  {
-  this.CategorySet = await proxy.CategorySetAsync(am.Token);
+  this.CategorySet = await proxy.CategorySetAsync((am as AuthenticationManager).Token);
  }
 
  async Task ShowTaskSet(BO.Category? c)
  {
   if (c == null) return;
   this.Category = c;
-  this.TaskSet = await proxy.TaskSetAsync(c.CategoryID, am.Token);
+  this.TaskSet = await proxy.TaskSetAsync(c.CategoryID, (am as AuthenticationManager).Token);
  }
 
  bool IsActiveCategory(BO.Category c)
@@ -72,7 +73,7 @@ public partial class Home
 
  public async Task newCatEvent()
  {
-  var newcategory = await proxy.CreateCategoryAsync(newCategoryName, am.Token);
+  var newcategory = await proxy.CreateCategoryAsync(newCategoryName, (am as AuthenticationManager).Token);
   await ShowCategorySet();
   await ShowTaskSet(newcategory);
  }
@@ -99,7 +100,7 @@ public partial class Home
   {
    if (!String.IsNullOrEmpty(this.newCategoryName))
    {
-    var newcategory = await proxy.CreateCategoryAsync(newCategoryName, am.Token);
+    var newcategory = await proxy.CreateCategoryAsync(newCategoryName, (am as AuthenticationManager).Token);
     await ShowCategorySet();
     await ShowTaskSet(newcategory);
    }
@@ -126,7 +127,7 @@ public partial class Home
     t.Order = 0;
     t.Note = "";
     t.Done = false;
-    await proxy.CreateTaskAsync(t, am.Token);
+    await proxy.CreateTaskAsync(t, (am as AuthenticationManager).Token);
     await ShowTaskSet(this.Category);
     this.newTaskTitle = "";
    }
@@ -142,7 +143,7 @@ public partial class Home
   // Rückfrage (Browser-Dialog via JS!)
   if (!await js.InvokeAsync<bool>("confirm", "Remove Task #" + t.TaskID + ": " + t.Title + "?")) return;
   // Löschen via WebAPI-Aufruf
-  await proxy.DeleteTaskAsync(t.TaskID, am.Token);
+  await proxy.DeleteTaskAsync(t.TaskID, (am as AuthenticationManager).Token);
   // Liste der Aufgaben neu laden
   await ShowTaskSet(this.Category);
   // aktuelle Aufgabe zurücksetzen
@@ -159,7 +160,7 @@ public partial class Home
   // Rückfrage (Browser-Dialog via JS!)
   if (!await js.InvokeAsync<bool>("confirm", "Remove Category #" + c.CategoryID + ": " + c.Name + "?")) return;
   // Löschen via WebAPI-Aufruf
-  await proxy.DeleteCategoryAsync(c.CategoryID, am.Token);
+  await proxy.DeleteCategoryAsync(c.CategoryID, (am as AuthenticationManager).Token);
   // Liste der Kategorien neu laden
   await ShowCategorySet();
   // aktuelle Category zurücksetzen
