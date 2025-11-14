@@ -3,12 +3,12 @@ using MiracleListAPI;
 
 namespace MiracleList.Client.Pages;
 
-public partial class Home
+public partial class Home(AuthenticationManager am, MiracleListProxy proxy, NavigationManager nav)
 {
-    [Inject]
-    public AuthenticationManager am { get; set; }
-    [Inject]
-    public MiracleListProxy proxy { get; set; }
+    //[Inject]
+    //AuthenticationManager am { get; set; }
+    //[Inject]
+    //MiracleListProxy proxy { get; set; }
 
     bool IsActiveCategory(BO.Category c)
     {

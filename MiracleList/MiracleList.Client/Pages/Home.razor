@@ -1,4 +1,8 @@
 ﻿@page "/"
+@page "/Home"
+@page "/Main"
+
+@* @inject MiracleListAPI.MiracleListProxy proxy *@
 
 <PageTitle>MiracleList @System.Reflection.Assembly.GetEntryAssembly()!.GetName().Version</PageTitle>
 
@@ -34,8 +38,8 @@
        style="background-color:@(this.Task != null && t.TaskID == Task.TaskID ? "#E0EEFA": null)"
        @onclick="()=>ShowTaskDetails(t)"> *@
 
-					<li class="list-group-item @(this.Task != null && t.TaskID == Task.TaskID ? "MLactive" : null)"
-									@onclick="() => ShowTaskDetails(t)" style="Background-color: @((t.TaskID == this.Task?.TaskID) ? "#E0EEFA" : "white")">
+					<li class="list-group-item @((t.TaskID == this.Task?.TaskID) ? "MLactive" : "")"
+									@onclick="() => ShowTaskDetails(t)">
 
 						<span style="float:left">
 							<input type="checkbox" class="MLcheckbox" checked="@t.Done" />
@@ -65,3 +69,6 @@
 	}
 
 </div>
+
+							<hr />
+							@nav.Uri.ToString()
