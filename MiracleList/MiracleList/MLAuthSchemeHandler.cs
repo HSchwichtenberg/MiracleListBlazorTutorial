@@ -36,4 +36,8 @@ public class MLAuthSchemeHandler : AuthenticationHandler<MLAuthSchemeOptions>
 
 public class MLAuthSchemeOptions : AuthenticationSchemeOptions
 {
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 62da502e57cfb015f9f6f58f8f7ae21ec2712220

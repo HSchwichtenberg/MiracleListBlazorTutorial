@@ -6,17 +6,37 @@
 <Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(NotFound)">
 
 	<Found Context="routeData">
+<<<<<<< HEAD
 		<AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
 			<Authorizing>
 				<h2 style="text-align:center">Authorizing...</h2>
 			</Authorizing>
+=======
+
+		<AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
+
+			<Authorizing>
+				<h2 style="text-align:center">Authorizing...</h2>
+			</Authorizing>
+
+>>>>>>> 62da502e57cfb015f9f6f58f8f7ae21ec2712220
 			<NotAuthorized>
 				@{
 					NavigationManager.NavigateTo("/login");
 				}
 			</NotAuthorized>
+<<<<<<< HEAD
 		</AuthorizeRouteView>
 		<FocusOnNavigate RouteData="@routeData" Selector="h1" />
 	</Found>
 
 </Router>
+=======
+
+		</AuthorizeRouteView>
+		<FocusOnNavigate RouteData="@routeData" Selector="h1" />
+
+	</Found>
+
+</Router>
+>>>>>>> 62da502e57cfb015f9f6f58f8f7ae21ec2712220
