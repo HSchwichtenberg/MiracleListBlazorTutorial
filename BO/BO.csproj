@@ -14,5 +14,8 @@
   <PackageReference Include="Newtonsoft.Json" Version="13.0.*" />
   <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
  </ItemGroup>
+ <ItemGroup>
+   <EditorConfigFiles Remove="H:\git\Github\MiracleListBlazorTutorial\BO\.editorconfig" />
+ </ItemGroup>
 
 </Project>
