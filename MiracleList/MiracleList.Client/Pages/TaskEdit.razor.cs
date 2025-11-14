@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using MiracleListAPI;
 
 namespace MiracleList.Client.Pages
 {
- public partial class TaskEdit(AuthenticationManager am, MiracleListProxy proxy)
+ public partial class TaskEdit(AuthenticationStateProvider am, MiracleListProxy proxy)
  {
   /// <summary>
   /// Zu bearbeitende Aufgabe
@@ -29,7 +30,7 @@ namespace MiracleList.Client.Pages
 
   protected async void Save()
   {
-   await proxy.ChangeTaskAsync(this.Task, am.Token);
+   await proxy.ChangeTaskAsync(this.Task, (am as AuthenticationManager).Token);
    await TaskHasChanged.InvokeAsync(true);
   }
 

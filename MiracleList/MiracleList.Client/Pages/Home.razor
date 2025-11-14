@@ -2,6 +2,8 @@
 @page "/Home"
 @page "/Main"
 
+@attribute [Authorize]
+
 @* @inject MiracleListAPI.MiracleListProxy proxy *@
 
 <PageTitle>MiracleList @System.Reflection.Assembly.GetEntryAssembly()!.GetName().Version</PageTitle>
@@ -10,8 +12,9 @@
 {
 	<ITVisions.Blazor.Controls.ProgressColorful></ITVisions.Blazor.Controls.ProgressColorful>
 }
+else
+{
 
-<PageTitle>MiracleList @System.Reflection.Assembly.GetEntryAssembly()!.GetName().Version</PageTitle>
 
 @* -------------------- Spalte 1: Kategorien *@
 <div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2 @(this.Task!=null ? "hidden-sm hidden-xs": ""  )">
@@ -52,7 +55,7 @@
 
     <span style="float:left">
      <input type="checkbox" class="MLcheckbox" @bind="t.Done" @onclick:stopPropagation="true" @bind:after='async ()=> {
-await proxy.ChangeTaskDoneAsync(t.TaskID, t.Done, am.Token); Util.Log("Done Changed: " + t.Done); }'
+await proxy.ChangeTaskDoneAsync(t.TaskID, t.Done, (am as AuthenticationManager).Token); Util.Log("Done Changed: " + t.Done); }'
  sto
  />
     </span>
@@ -85,5 +88,5 @@ await proxy.ChangeTaskDoneAsync(t.TaskID, t.Done, am.Token); Util.Log("Done Chan
 
  </div>
 
-    <hr />
-    @js.GetType().FullName | @nav.GetType().FullName | @this.RendererInfo.Name
+ <hr />
+}

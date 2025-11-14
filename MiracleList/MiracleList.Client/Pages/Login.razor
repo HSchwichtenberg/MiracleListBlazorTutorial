@@ -1,0 +1,33 @@
+﻿@inject AuthenticationStateProvider am
+@inject NavigationManager nav
+@inject IJSRuntime js
+@page "/login"
+@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Components.Authorization
+
+<h3>Login</h3>
+
+<label for="username">
+	Username:
+</label>
+<input type="text" name="username" class="form-control" @bind="Username" />
+<br />
+
+<label for="password">
+	Password:
+</label>
+<input type="password" name="password" class="form-control" @bind="Password" />
+<br />
+<button class="btn btn-default" @onclick="StartLogin">Login</button>
+
+@code {
+	public string Username { get; set; }
+	public string Password { get; set; }
+
+	private async Task StartLogin(MouseEventArgs args)
+	{
+		var ok =	await (am as AuthenticationManager).Login(Username, Password);
+		if (ok) nav.NavigateTo("/main");
+		else await js.InvokeVoidAsync("alert", "Du kommst hier nicht rein!");
+	}
+}

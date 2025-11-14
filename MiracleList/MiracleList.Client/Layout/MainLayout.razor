@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inherits LayoutComponentBase
 
 @inject NavigationManager NavigationManager
 
@@ -33,21 +34,33 @@
 <div class="row">
  <span class="col-xs-12 hidden-sm hidden-md hidden-lg">
   <hr />
-  @((MarkupString)status)
+  @((MarkupString)status)<br />
+ @*  <AuthorizeView>
+   <Authorized>Benutzer: @context.User.Identity.Name</Authorized>
+   <NotAuthorized>nicht angemeldet</NotAuthorized>
+  </AuthorizeView> *@
  </span>
 </div>
 
+
 @code
 {
- string status => "Anwendungsversion: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + "<br>" + System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription + "<br>Blazor " + this.RendererInfo.Name;
+	[CascadingParameter] Task<AuthenticationState> authenticationStateTask { get; set; }
 
- protected override void OnInitialized()
- {
+ string status => "Anwendungsversion: " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + "<br>" + System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription + "<br>Blazor " + this.RendererInfo.Name + "<br>Benutzer: " + user;
+	string user = "";
+	protected override void OnInitialized()
+	{
 		// Ausgabe der	Render-Modi in der Debug-Konsole
-  var renderMode = $"RenderMode = {this.RendererInfo.Name} -> {this.AssignedRenderMode?.GetType()?.Name}";
+		var renderMode = $"RenderMode = {this.RendererInfo.Name} -> {this.AssignedRenderMode?.GetType()?.Name}";
 		var linie = new string('=', renderMode.Length);
-  System.Diagnostics.Debug.WriteLine($"{linie}\n{renderMode}\n{linie}");
- }
+		System.Diagnostics.Debug.WriteLine($"{linie}\n{renderMode}\n{linie}");
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+  user = (await authenticationStateTask).User.Identity.Name;
+	}
 
  public void ShowAbout()
  {
