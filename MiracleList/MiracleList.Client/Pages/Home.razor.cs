@@ -45,8 +45,9 @@ public partial class Home
   this.CategorySet = await proxy.CategorySetAsync(am.Token);
  }
 
- async Task ShowTaskSet(BO.Category c)
+ async Task ShowTaskSet(BO.Category? c)
  {
+  if (c == null) return;
   this.Category = c;
   this.TaskSet = await proxy.TaskSetAsync(c.CategoryID, am.Token);
  }
@@ -77,11 +78,11 @@ public partial class Home
  {
   if (!saved) // Neuladen, um zu altem Zustand des Task-Objekts zu kommen! Alternative: Undo selbst implementieren!
   {
-   await ShowTaskSet(Category);
+   await ShowTaskSet(this.Category);
   }
   else
   {
-   // this.StateHasChanged() wäre im Fall true notwendig, wenn wir nicht noch eine Eigenschaft verändern, um das Rendering wieder anzustoßen, um den gespeicherten Wert anzuzeigen!
+   //this.StateHasChanged(); // wäre im Fall true notwendig, wenn wir nicht noch eine Eigenschaft verändern, um das Rendering wieder anzustoßen, um den gespeicherten Wert anzuzeigen!
   }
   this.Task = null;
  }

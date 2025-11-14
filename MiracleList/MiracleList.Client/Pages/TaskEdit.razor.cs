@@ -1,20 +1,22 @@
 using Microsoft.AspNetCore.Components;
+using MiracleListAPI;
 
 namespace MiracleList.Client.Pages
 {
- public partial class TaskEdit
+ public partial class TaskEdit(AuthenticationManager am, MiracleListProxy proxy)
  {
-  [Parameter] // zu bearbeitende Aufgabe
+  /// <summary>
+  /// Zu bearbeitende Aufgabe
+  /// </summary>
+  [Parameter]
   public BO.Task Task { get; set; }
 
-  [Parameter] // Ereignis, wenn Aufgabe sich geändert hat
+  /// <summary>
+  /// Ereignis, wenn Aufgabe sich geändert hat. 
+  /// True = Gespeichert. False = Cancel
+  /// </summary>
+  [Parameter]
   public EventCallback<bool> TaskHasChanged { get; set; }
-
-  [Inject]
-  MiracleListAPI.MiracleListProxy proxy { get; set; } = null;
-
-  [Inject]
-  AuthenticationManager am { get; set; }
 
   protected override async System.Threading.Tasks.Task OnInitializedAsync()
   {
@@ -34,11 +36,6 @@ namespace MiracleList.Client.Pages
   protected async void Cancel()
   {
    await TaskHasChanged.InvokeAsync(false);
-  }
-
-  private async Task GetTask(int id)
-  {
-   this.Task = await proxy.TaskAsync(id, am.Token);
   }
  } // end class TaskEdit
 }

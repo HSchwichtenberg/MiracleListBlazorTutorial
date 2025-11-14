@@ -3,50 +3,53 @@
  <div style="padding: 0">
   <div>
    <h4>Task @Task.Title</h4>
-   <form>
+   <EditForm Model="this.Task" OnValidSubmit="Save">
+    <DataAnnotationsValidator>
+    </DataAnnotationsValidator>
+    <ValidationSummary style="color:darkred"></ValidationSummary>
     <!--Schaltflächen-->
-    <button type="button" title="Änderungen speichern"
-            @onclick="Save" class="btn btn-success">
+    <button type="submit" title="Änderungen speichern"
+            class="btn btn-success">
      <span class="glyphicon  glyphicon-floppy-save"></span> <span class="hidden-xs" i18n>Save</span>
     </button>
     <button type="button" title="Änderungen verwerfen" @onclick="Cancel" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span> <span class="hidden-xs" i18n>Cancel</span></button>
     <!--Titel-->
     <div class="form-group">
      <label for="tasktitle">Titel</label>
-     <input id="tasktitle" name="tasktitle" type="text" @bind="Task.Title" required class="form-control" />
+     <InputText id="tasktitle" name="tasktitle" type="text" @bind-Value="Task.Title" required class="form-control" />
     </div>
     <div class="row">
      <!--Wichtigkeit-->
      <span class="col-xs-3" style="padding-right: 2px">
       <div class="form-group">
        <label for="taskimportance" i18n>Importance</label>
-       <select id="taskimportance" name="taskimportance" @bind="Task.ImportanceNN" class="form-control">
+       <InputSelect id="taskimportance" name="taskimportance" @bind-Value="Task.ImportanceNN" class="form-control">
         @foreach (object s in System.Enum.GetValues(typeof(BO.Importance)))
         {
          <option value="@s">@s</option>
         }
-       </select>
+       </InputSelect>
       </div>
      </span>
      <!--Aufwand-->
      <span class="col-xs-3" style="padding-left: 2px; padding-right: 2px">
       <label for="taskeffort " i18n>Effort</label>
-      <input id="taskeffort" type="number" name="taskeffort" @bind="Task.Effort" class="form-control" />
+      <InputNumber id="taskeffort" name="taskeffort" @bind-Value="Task.Effort" class="form-control" />
      </span>
      <!--Fälligkeit-->
      <span class="col-xs-6" style="padding-left: 2px; ">
       <div class="form-group">
        <label for="taskDue" i18n>Due</label>
-       <input id="taskdue" name="taskdue" type="date" @bind="Task.DueNN" class="form-control" />
+       <InputDate id="taskdue" name="taskdue" @bind-Value="Task.Due" class="form-control" />
       </div>
      </span>
     </div>  <!--Ende row-->
     <!--Notiz-->
     <div class="form-group ">
      <label for="tasknote" i18n>Note</label>
-     <textarea id="tasknote" name="tasknote " rows="5" @bind="Task.Note" class="form-control "></textarea>
+     <InputText id="tasknote" name="tasknote " rows="5" @bind-Value="Task.Note" class="form-control "></InputText>
     </div>
-   </form>
+   </EditForm>
   </div>
  </div>
 }

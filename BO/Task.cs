@@ -20,6 +20,7 @@ namespace BO
   /// </summary>
   public int TaskID { get; set; } // PK per Konvention
   [MaxLength(250)] // alias: StringLength
+  [Required]
   public string Title { get; set; }
   public DateTime Created { get; set; } = DateTime.Now;
   public DateTime? Due { get; set; }
@@ -27,7 +28,8 @@ namespace BO
   public string Note { get; set; }
 
   [NotMapped]
-  public Importance ImportanceNN {
+  public Importance ImportanceNN
+  {
    get
    {
     return this.Importance ?? BO.Importance.A;
@@ -54,7 +56,7 @@ namespace BO
   public bool Done { get; set; }
   public decimal? Effort { get; set; }
   public int Order { get; set; }
-  public int? DueInDays  { get; set; } // Computed Column, must be nullable as Due is nullable!
+  public int? DueInDays { get; set; } // Computed Column, must be nullable as Due is nullable!
   //public int DueInDays2 {  get { return (this.Due.GetValueOrDefault() - System.DateTime.Now).Days;  } }
 
   // -------------- Navigation Properties
@@ -66,6 +68,6 @@ namespace BO
   /// <summary>
   /// CategoryID ist Pflicht für neue Tasks!
   /// </summary>
-  public int CategoryID { get; set; } 
+  public int CategoryID { get; set; }
  }
 }
