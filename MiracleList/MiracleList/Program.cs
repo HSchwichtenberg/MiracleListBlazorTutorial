@@ -1,18 +1,20 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MiracleList.Client;
-using MiracleList.Client.Pages;
 using MiracleList.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// DI der Kern-Dienste für Blazor
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+// DI der eigenen Dienste, die sowohl im Server als auch im Client benötigt werden
 SharedDI.AddServices(builder.Services);
 
 var app = builder.Build();
+
+//---------------------------------------------------------------------
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -7,6 +7,7 @@ System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
+// DI der eigenen Dienste, die sowohl im Server als auch im Client benötigt werden
 SharedDI.AddServices(builder.Services);
 
 await builder.Build().RunAsync();
