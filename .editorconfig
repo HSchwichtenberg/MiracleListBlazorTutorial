@@ -4,7 +4,7 @@ root = false
 # C# files
 [*.cs]
 
-#### Core EditorConfig Options ####
+#### Einrückung bewusst nur 1 Zeichen für einfaches Copy & Paste in Fachartikel, Fachbücher u.a. Dokumentationen ####
 
 # Indentation and spacing
 indent_size = 1
