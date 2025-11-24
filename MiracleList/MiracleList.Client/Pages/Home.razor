@@ -18,7 +18,7 @@
  <input name="newCategoryName" type="text" class="form-control" @bind="newCategoryName" 
  @bind:after="NewCategory"
  placeholder="new Category..." /> 
-  @* @onkeyup="(e) => NewCategory_Keyup(e)"*@ 
+  @* Alternative: @onkeyup="(e) => NewCategory_Keyup(e)"*@ 
 
  <ol class="list-group scroll">
   @foreach (var c in this.CategorySet)

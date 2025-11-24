@@ -100,7 +100,7 @@ public partial class Home
  }
 
  /// <summary>
- /// Use Keyup instead of Keypress as the actual data binding did not yet happen when Keypress is fired
+ /// Alternative: Use Keyup instead of Keypress as the actual data binding did not yet happen when Keypress is fired
  /// </summary>
  public async Task NewCategory_Keyup(KeyboardEventArgs e)
  {
