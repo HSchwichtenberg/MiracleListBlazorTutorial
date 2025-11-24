@@ -6,9 +6,19 @@
 
 <PageTitle>MiracleList @System.Reflection.Assembly.GetEntryAssembly()!.GetName().Version</PageTitle>
 
+
 <div class="row" style="margin:10px">
 
+
+	@if (this.TaskSet == null)
+	{
+		<ITVisions.Blazor.Controls.ProgressColorful></ITVisions.Blazor.Controls.ProgressColorful>
+
+	}
+
 	@* Spalte 1: Kategorien *@
+@if (this.CategorySet != null)
+	{
 	<div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2">
 
 		<h4>
@@ -24,6 +34,7 @@
 		</ol>
 
 	</div>
+	}
 
 	@* Spalte 2: Aufgaben *@
 	@if (this.TaskSet != null)
