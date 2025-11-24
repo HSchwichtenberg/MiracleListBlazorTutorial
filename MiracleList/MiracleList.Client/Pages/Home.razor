@@ -14,11 +14,10 @@
 }
 else
 {
-
-
 @* -------------------- Spalte 1: Kategorien *@
 <div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2 @(this.Task!=null ? "hidden-sm hidden-xs": ""  )">
- <input name="newCategoryName" type="text" class="form-control" @bind="newCategoryName" @onkeyup="(e) => NewCategory_Keyup(e)" placeholder="new Category..." />
+ <input name="newCategoryName" type="text" class="form-control" @bind="newCategoryName" @bind:after="NewCatEvent" placeholder="new Category..." />
+ @* Alternative: @onkeyup="(e) => NewCategory_Keyup(e)"  *@
 
  <ol class="list-group scroll">
   @foreach (var c in this.CategorySet)

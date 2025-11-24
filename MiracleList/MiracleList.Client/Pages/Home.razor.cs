@@ -71,13 +71,6 @@ public partial class Home
   this.Task = t;
  }
 
- public async Task newCatEvent()
- {
-  var newcategory = await proxy.CreateCategoryAsync(newCategoryName, (am as AuthenticationManager).Token);
-  await ShowCategorySet();
-  await ShowTaskSet(newcategory);
- }
-
  public bool UIShouldRender { get; set; } = true;
  public async Task TaskHasChanged(bool saved)
  {
@@ -99,8 +92,15 @@ public partial class Home
   return this.UIShouldRender;
  }
 
+ public async Task NewCatEvent()
+ {
+  var newcategory = await proxy.CreateCategoryAsync(newCategoryName, (am as AuthenticationManager).Token);
+  await ShowCategorySet();
+  await ShowTaskSet(newcategory);
+ }
+
  /// <summary>
- /// Use Keyup instead of Keypress as the actual data binding did not yet happen when Keypress is fired
+ /// Alternative zu NewCatEvent: Use Keyup instead of Keypress as the actual data binding did not yet happen when Keypress is fired
  /// </summary>
  public async Task NewCategory_Keyup(KeyboardEventArgs e)
  {
