@@ -39,6 +39,8 @@ public class AuthenticationManager(MiracleListProxy proxy, BlazorUtil util) : Au
 
  private async Task<bool> LoginInternal(LoginInfo loginInfo)
  {
+  if (loginInfo.ClientID == "TODO") util.Error("Sie müssen im AuthenticationManager Ihre Client-ID eintragen!");
+
   try
   {
    CurrentLoginInfo = await proxy.LoginAsync(loginInfo);
