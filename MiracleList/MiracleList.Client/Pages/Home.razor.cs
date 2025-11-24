@@ -34,6 +34,7 @@ public partial class Home
 
  protected override async Task OnInitializedAsync()
  {
+  Util.Log(this.RendererInfo.Name + "/" + nav.GetType().FullName + "/" + js.GetType().FullName);
   Util.Log("Login", await am.Login());
   Util.Log("Token", am.Token);
 
@@ -70,13 +71,6 @@ public partial class Home
   this.Task = t;
  }
 
- public async Task newCatEvent()
- {
-  var newcategory = await proxy.CreateCategoryAsync(newCategoryName, am.Token);
-  await ShowCategorySet();
-  await ShowTaskSet(newcategory);
- }
-
  public bool UIShouldRender { get; set; } = true;
  public async Task TaskHasChanged(bool saved)
  {
@@ -96,6 +90,13 @@ public partial class Home
  protected override bool ShouldRender()
  {
   return this.UIShouldRender;
+ }
+
+ public async Task NewCategory()
+ {
+  var newcategory = await proxy.CreateCategoryAsync(newCategoryName, am.Token);
+  await ShowCategorySet();
+  await ShowTaskSet(newcategory);
  }
 
  /// <summary>

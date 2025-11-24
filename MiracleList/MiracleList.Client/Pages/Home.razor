@@ -15,7 +15,10 @@
 
 @* -------------------- Spalte 1: Kategorien *@
 <div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2 @(this.Task!=null ? "hidden-sm hidden-xs": ""  )">
- <input name="newCategoryName" type="text" class="form-control" @bind="newCategoryName" @onkeyup="(e) => NewCategory_Keyup(e)" placeholder="new Category..." />
+ <input name="newCategoryName" type="text" class="form-control" @bind="newCategoryName" 
+ @bind:after="NewCategory"
+ placeholder="new Category..." /> 
+  @* @onkeyup="(e) => NewCategory_Keyup(e)"*@ 
 
  <ol class="list-group scroll">
   @foreach (var c in this.CategorySet)
@@ -84,6 +87,3 @@ await proxy.ChangeTaskDoneAsync(t.TaskID, t.Done, am.Token); Util.Log("Done Chan
  <TaskEdit Task="Task" TaskHasChanged="TaskHasChanged"></TaskEdit>
 
  </div>
-
-    <hr />
-    @js.GetType().FullName | @nav.GetType().FullName | @this.RendererInfo.Name
