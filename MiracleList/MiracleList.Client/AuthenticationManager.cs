@@ -17,8 +17,10 @@ public class AuthenticationManager(MiracleListProxy proxy, BlazorUtil util)
   loginInfo.Password = "geheim";
   try
   {
-
-   if (loginInfo.ClientID == "TODO") util.Error("Sie müssen im AuthenticationManager Ihre Client-ID eintragen!");
+   if (loginInfo.ClientID == "TODO")
+   {
+    throw new ApplicationException("Sie müssen im AuthenticationManager Ihre Client-ID eintragen, siehe http://miraclelistbackend.azurewebsites.net/!");
+   }
 
    var loginInfoResult = await proxy.LoginAsync(loginInfo);
 
