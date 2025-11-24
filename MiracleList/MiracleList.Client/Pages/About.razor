@@ -9,52 +9,52 @@ Autor: Dr. Holger Schwichtenberg, <a href="http://www.IT-Visions.de/">www.IT-Vis
 <hr />
 <div class="row" style="margin-top:10px">
 
- <span class="col-xs-12 col-md-6" style="margin-bottom:20px">
-  <h4>Client</h4>
-  @*Beispiel: Direkter Aufruf einer Methode*@
-  Application Version: @System.Reflection.Assembly.GetExecutingAssembly()!.GetName()!.Version!.ToString()
-  <br />
-  @*Beispiel: Verwendung einer Variablen*@
-  .NET-Version: @DOTNETVersion
-  <br />
-  ITVisions.Blazor-Version: @typeof(ITVisions.Blazor.BlazorUtil).Assembly.GetName().Version
-  <br />
-  ITVisions.AppUtil-Version: @typeof(ITVisions.CUI).Assembly.GetName().Version
-  <br />
-  @*Beispiel: Nutzung eines Properties*@
-  Aktueller Blazor-Render-Modus: @this.RendererInfo.Name<br>
-  Ziel-Blazor-Rendermodus: @this.AssignedRenderMode?.GetType()?.Name
- </span>
+	<span class="col-xs-12 col-md-6" style="margin-bottom:20px">
+		<h4>Client</h4>
+		@*Beispiel: Direkter Aufruf einer Methode*@
+		Application Version: @System.Reflection.Assembly.GetExecutingAssembly()!.GetName()!.Version!.ToString()
+		<br />
+		@*Beispiel: Verwendung einer Variablen*@
+		.NET-Version: @DOTNETVersion
+		<br />
+		ITVisions.Blazor-Version: @typeof(ITVisions.Blazor.BlazorUtil).Assembly.GetName().Version
+		<br />
+		ITVisions.AppUtil-Version: @typeof(ITVisions.CUI).Assembly.GetName().Version
+		<br />
+		@*Beispiel: Nutzung eines Properties*@
+		Aktueller Blazor-Render-Modus: @this.RendererInfo.Name<br>
+		Ziel-Blazor-Rendermodus: @this.AssignedRenderMode?.GetType()?.Name
+	</span>
 
- <span class="col-xs-12 col-md-6">
- @*Beispiel: Nutzung einer Information, die asynchron eingeht*@
- <h4>Server (WebAPI-Backend)</h4>
- @ServerAppVersion
- <br />
- @ServerFramework
- </span>
+	<span class="col-xs-12 col-md-6">
+	@*Beispiel: Nutzung einer Information, die asynchron eingeht*@
+	<h4>Server (WebAPI-Backend)</h4>
+	@ServerAppVersion
+	<br />
+	@ServerFramework
+	</span>
 </div>
 
 @code {
- public string DOTNETVersion { get; set; } = "n/a";
- public string ServerAppVersion { get; set; } = "n/a";
- public string ServerFramework { get; set; } = "n/a";
- /// <summary>
- /// Lebenszyklusereignis: Komponente wird initialisiert
- /// </summary>
- protected override async Task OnInitializedAsync()
- {
-  DOTNETVersion = " " + System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
+	public string DOTNETVersion { get; set; } = "n/a";
+	public string ServerAppVersion { get; set; } = "n/a";
+	public string ServerFramework { get; set; } = "n/a";
+	/// <summary>
+	/// Lebenszyklusereignis: Komponente wird initialisiert
+	/// </summary>
+	protected override async Task OnInitializedAsync()
+	{
+		DOTNETVersion = " " + System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
 
-  // WebAPI aufrufen
-  var serverData = await proxy.AboutAsync();
-  ServerAppVersion = serverData[6];
-  ServerFramework = serverData[8];
+		// WebAPI aufrufen
+		var serverData = await proxy.AboutAsync();
+		ServerAppVersion = serverData[6];
+		ServerFramework = serverData[8];
 		Util.Log(DOTNETVersion); // Ausgabe in Browserkonsole mit Hilfsbibliothek ITVisions.Blazor -> funktioniert im Gegensatz zu Console.WriteLine auch bei Blazor Server :-)
- }
+	}
 
- protected override void OnAfterRender(bool firstRender)
- {
-  Util.Log(nav?.GetType()?.FullName);
- }
+	protected override void OnAfterRender(bool firstRender)
+	{
+		Util.Log(nav?.GetType()?.FullName);
+	}
 }
