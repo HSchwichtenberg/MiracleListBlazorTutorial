@@ -17,30 +17,35 @@
 	}
 
 	@* Spalte 1: Kategorien *@
-@if (this.CategorySet != null)
+	@if (this.CategorySet != null)
 	{
-	<div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2">
+		<div class="MLPanel col-xs-4 col-sm-4 col-md-3 col-lg-2 @(this.Task != null ? "hidden-sm hidden-xs" : "")">
 
-		<h4>
-			@this.CategorySet.Count Categories
-		</h4>
-		<ol class="list-group scroll">
-			@foreach (var c in this.CategorySet)
-			{
-				<li class="list-group-item"
-								style="background-color:@GetCategoryColor(c)"
-								@onclick="() => ShowTaskSet(c)">@c.Name</li>
-			}
-		</ol>
+			<h4>
+				@this.CategorySet.Count Categories
+			</h4>
 
-	</div>
+			<input type="text" @bind="NewCategoryName" class="form-control" placeholder="New Category... + ENTER" @bind:after="CreateCategory" />
+			<ol class="list-group scroll">
+				@foreach (var c in this.CategorySet)
+				{
+					<li class="list-group-item"
+									style="background-color:@GetCategoryColor(c)"
+									@onclick="() => ShowTaskSet(c)">@c.Name</li>
+				}
+			</ol>
+
+		</div>
 	}
 
 	@* Spalte 2: Aufgaben *@
 	@if (this.TaskSet != null)
 	{
-		<div class="MLPanel col-xs-8 col-sm-8 col-md-9 col-lg-10">
+		<div class="MLPanel @(this.Task == null ? "col-xs-8 col-sm-8 col-md-9 col-lg-10 " : "hidden-xs col-sm-6 col-md-5 col-lg-6")">
 			<h4>@this.TaskSet.Count Tasks in Category <i>@this.Category?.Name</i></h4>
+
+
+			<input type="text" @bind="NewTaskName" class="form-control" placeholder="New Task... + ENTER" @bind:after="CreateTask" />
 			<ol class="list-group scroll">
 				@foreach (var t in this.TaskSet)
 				{
@@ -53,7 +58,9 @@
 									@onclick="() => ShowTaskDetails(t)">
 
 						<span style="float:left">
-							<input type="checkbox" class="MLcheckbox" checked="@t.Done" />
+							<input type="checkbox" class="MLcheckbox" @bind="t.Done"
+														@onclick:stopPropagation="true"
+														@bind:after="() => SaveDone(t)" />
 						</span>
 						<b>@t.Title</b>
 						<br />
@@ -79,7 +86,14 @@
 		</div>
 	}
 
+	@if (this.Task != null)
+	{
+		<div class="MLPanel col-xs-12 col-sm-6 col-md-4 col-lg-4">
+		<TaskEdit CurrentTask="Task" TaskChanged="TaskChanged" />
+		</div>
+	}
+
 </div>
 
-							<hr />
-							@nav.Uri.ToString()
+<hr />
+@nav.Uri.ToString()

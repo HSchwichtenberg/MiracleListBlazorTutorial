@@ -37,6 +37,9 @@ public partial class Home(AuthenticationManager am, MiracleListProxy proxy, Navi
  [PersistentState]
  public BO.Task Task { get; set; }
 
+ public string NewCategoryName { get; set; }
+ public string NewTaskName { get; set; }
+
  protected override async Task OnInitializedAsync()
  {
   Util.Log("Login", await am.Login());
@@ -59,5 +62,42 @@ public partial class Home(AuthenticationManager am, MiracleListProxy proxy, Navi
  void ShowTaskDetails(BO.Task t)
  {
   this.Task = t;
+ }
+
+ private async Task CreateCategory()
+ {
+  var newCategory = await proxy.CreateCategoryAsync(this.NewCategoryName, am.Token);
+  this.CategorySet.Add(newCategory);
+ }
+
+ private async Task CreateTask()
+ {
+  var newTask = new BO.Task();
+  newTask.Title = NewTaskName;
+  newTask.Due = DateTime.Now.AddDays(1);
+  newTask.CategoryID = this.Category.CategoryID;
+  newTask = await proxy.CreateTaskAsync(newTask, am.Token);
+  this.TaskSet.Add(newTask);
+ }
+
+ private async Task SaveDone(BO.Task t)
+ {
+  await proxy.ChangeTaskDoneAsync(t.TaskID, t.Done, am.Token);
+ }
+
+ public bool UIShouldRender { get; set; } = true;
+ private async Task TaskChanged(bool args)
+ {
+  this.UIShouldRender = false;
+  if (args) await proxy.ChangeTaskAsync(this.Task, am.Token);
+  else await ShowTaskSet(this.Category);
+  this.Task = null;
+  this.UIShouldRender = true;
+
+ }
+
+ protected override bool ShouldRender()
+ {
+  return this.UIShouldRender;
  }
 }
