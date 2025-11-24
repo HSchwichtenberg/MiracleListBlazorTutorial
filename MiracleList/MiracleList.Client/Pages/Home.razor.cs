@@ -78,8 +78,10 @@ public partial class Home
   await ShowTaskSet(newcategory);
  }
 
+ public bool UIShouldRender { get; set; } = true;
  public async Task TaskHasChanged(bool saved)
  {
+  this.UIShouldRender = false;
   if (!saved) // Neuladen, um zu altem Zustand des Task-Objekts zu kommen! Alternative: Undo selbst implementieren!
   {
    await ShowTaskSet(this.Category);
@@ -89,6 +91,12 @@ public partial class Home
    //this.StateHasChanged(); // wäre im Fall true notwendig, wenn wir nicht noch eine Eigenschaft verändern, um das Rendering wieder anzustoßen, um den gespeicherten Wert anzuzeigen!
   }
   this.Task = null;
+  this.UIShouldRender = true;
+ }
+
+ protected override bool ShouldRender()
+ {
+  return this.UIShouldRender;
  }
 
  /// <summary>
