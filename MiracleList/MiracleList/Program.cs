@@ -1,8 +1,11 @@
 using System.Net;
+using ITVisions;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MiracleList.Client;
 using MiracleList.Components;
 using Web;
+
+CUI.AppTitlePanel("MiracleListTutorial v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString());
 
 var builder = WebApplication.CreateBuilder(args);
 
